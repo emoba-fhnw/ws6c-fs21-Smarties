@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -44,13 +45,18 @@ class MainActivity : AppCompatActivity() {
     private val RQ_SPEECH_REC = 102
 
     lateinit var tv_text : TextView
+    lateinit var btn_button : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        btn_button.setOnClickListener{
+            askSpeechInput()
+        }
     }
 
-    fun onActionResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == RQ_SPEECH_REC && resultCode == Activity.RESULT_OK){
