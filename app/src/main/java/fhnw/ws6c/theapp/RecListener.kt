@@ -3,6 +3,7 @@ package fhnw.ws6c.theapp
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.SpeechRecognizer
+import android.widget.Toast
 import fhnw.ws6c.theapp.model.TheModel
 
 class RecListener(var model : TheModel) : RecognitionListener{
@@ -27,12 +28,19 @@ class RecListener(var model : TheModel) : RecognitionListener{
     }
 
     override fun onError(error: Int) {
+        model.isRecording.value = false
         println("onError: " + error)
+        if(error==7){
+            Toast.makeText(model.context,"Kannst du das bitte wiederholen?", Toast.LENGTH_LONG).show()
+            model.recording()
+        }
     }
 
     override fun onResults(results: Bundle?) {
+        model.isRecording.value = false
         println("onResults")
-        model.text.value = results!!.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)!!.get(0)
+        model.audio_text.value = results!!.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)!!.get(0)
+        model.onTextResult()
     }
 
     override fun onPartialResults(partialResults: Bundle?) {
