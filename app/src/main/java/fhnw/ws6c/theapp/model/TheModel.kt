@@ -3,7 +3,6 @@ package fhnw.ws6c.theapp.model
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import fhnw.ws6c.theapp.data.Category
 import fhnw.ws6c.theapp.data.RemoteCategoryService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +22,8 @@ class TheModel(val remoteCategoryService: RemoteCategoryService) {
         isLoading = true;
         category_model.jsonString = ""
         modelScope.launch{
-            category_model.jsonString = remoteCategoryService.requestCategoryList()
+            category_model.jsonString = remoteCategoryService.requestCategoryJson()
+            category_model.drinksOfChoosenCategory = remoteCategoryService.convertJsonToListOfCategoryDrinks(remoteCategoryService.requestCategoryJson())
         }
         isLoading = false
     }

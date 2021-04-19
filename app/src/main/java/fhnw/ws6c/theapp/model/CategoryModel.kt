@@ -7,7 +7,7 @@ import fhnw.ws6c.theapp.data.Category
 import fhnw.ws6c.theapp.data.Drink
 
 class CategoryModel {
-    val drinksOfChoosenCategory : List<Drink>   by mutableStateOf(emptyList())
+    var drinksOfChoosenCategory : List<Drink>   by mutableStateOf(emptyList())
     var jsonString : String                     by mutableStateOf(String()) //todo delete when it's working
 
 }

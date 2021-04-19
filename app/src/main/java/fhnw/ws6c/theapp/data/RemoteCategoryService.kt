@@ -1,5 +1,6 @@
 package fhnw.ws6c.theapp.data
 
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.lang.Exception
@@ -11,8 +12,7 @@ class RemoteCategoryService {
 
     private val baseURL = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?"
 
-    fun requestCategoryList() : String {
-
+    fun requestCategoryJson() : String {
         try {
             var url = URL("${baseURL}" + "c=Cocktail")
 
@@ -38,5 +38,20 @@ class RemoteCategoryService {
         return ""
     }
 
+    fun convertJsonToListOfCategoryDrinks(jsonString : String ): List<Drink> {
+        val listOfDrinks = mutableListOf<Drink>()
+        val json = JSONObject(jsonString)
+        val nameOfArray = "drinks"
 
+        if(json.has(nameOfArray)){
+            val jsonArray = json.getJSONArray(nameOfArray) //convert json to array
+
+            for(i in 0 until jsonArray.length()){
+                val drink = Drink(jsonArray.getJSONObject(i)) //convert every array element to a drink
+                listOfDrinks.add(drink)
+            }
+            return listOfDrinks
+        }
+        return emptyList()
+    }
 }

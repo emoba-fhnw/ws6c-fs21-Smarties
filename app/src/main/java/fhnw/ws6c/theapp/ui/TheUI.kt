@@ -1,16 +1,18 @@
 package fhnw.ws6c.theapp.ui
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import fhnw.ws6c.theapp.model.TheModel
 
 
@@ -23,8 +25,21 @@ fun AppUI(model : TheModel){
                     Text("load drinks")
                 }
             }
-            Row() {
-                Text(category_model.jsonString)
+            Row(){
+                LazyColumnFor(items = category_model.drinksOfChoosenCategory){
+                    Card(
+                        border = BorderStroke(2.dp, Color.Black),
+                        backgroundColor = Color.Cyan,
+                        modifier = Modifier.padding(2.dp)
+                    ) {
+                        Column(modifier = Modifier.padding(4.dp)) {
+                            Text("Name: " + it.name)
+                            Text("Id: " + it.id.toString())
+                            Text("Umg_url: " + it.img_url)
+                        }
+                    }
+                    Spacer(modifier = Modifier.padding(4.dp))
+                }
             }
         }
     }
