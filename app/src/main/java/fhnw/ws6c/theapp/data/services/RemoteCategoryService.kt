@@ -1,5 +1,6 @@
-package fhnw.ws6c.theapp.data
+package fhnw.ws6c.theapp.data.services
 
+import fhnw.ws6c.theapp.data.Drink
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader

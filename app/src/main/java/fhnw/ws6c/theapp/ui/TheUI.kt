@@ -1,10 +1,8 @@
 package fhnw.ws6c.theapp.ui
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.Button
 import androidx.compose.material.Card
@@ -32,10 +30,12 @@ fun AppUI(model : TheModel){
                         backgroundColor = Color.Cyan,
                         modifier = Modifier.padding(2.dp)
                     ) {
-                        Column(modifier = Modifier.padding(4.dp)) {
-                            Text("Name: " + it.name)
-                            Text("Id: " + it.id.toString())
-                            Text("Umg_url: " + it.img_url)
+                        loadDrinkImgAsync(it)
+                        Row(){
+                            Image(it.preview_img, "Image of " + it.name)
+                            Column(modifier = Modifier.padding(4.dp).fillMaxWidth()) {
+                                Text("Name: " + it.name)
+                            }
                         }
                     }
                     Spacer(modifier = Modifier.padding(4.dp))
