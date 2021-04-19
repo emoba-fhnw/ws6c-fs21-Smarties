@@ -19,15 +19,13 @@ class TheModel(val remoteCategoryService: RemoteCategoryService) {
     val category_model = CategoryModel()
 
 
-    fun loadChoosenCategoryAsync(choosenCategory : Category){
+    fun loadDrinksOfChoosenCategoryAsync(){
         isLoading = true;
+        category_model.jsonString = ""
         modelScope.launch{
-            loadChoosenCategory()
+            category_model.jsonString = remoteCategoryService.requestCategoryList()
         }
         isLoading = false
     }
 
-    private fun loadChoosenCategory(){
-
-    }
 }

@@ -1,22 +1,22 @@
 package fhnw.ws6c.theapp.data
 import org.json.JSONObject
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 
-class Category(json: JSONObject) {
-    val drinks = json.getJSONObject("drinks")
+class Category {
 
-    val name = drinks.getString("strDrink")
-    val img = drinks.getString("strDrinkThumb")
-    val id = drinks.getInt("idDrink")
+    val listOfDrinks_URL : String
 
-    constructor(jsonString: String) : this(JSONObject(jsonString))
+    //will be reloaded
+    val listOfDrinks : List<Drink> by mutableStateOf(emptyList())
 
-    fun asJson(): String {
-        return "{" +
-                "\"drinks\": $drinks," +
-                "\"strDrink\": \"$name\"," +
-                "\"strDrinkThumb\": \"$img\"," +
-                 "\"idDrink\": \"$id\"," +
-                "}" +
-                "}"
+
+    constructor(json : JSONObject){
+        listOfDrinks_URL = if(json.has("drinks")){
+            json.getString("drinks")
+        }else{
+            ""
+        }
     }
+
 }
