@@ -3,7 +3,9 @@ package fhnw.ws6c.theapp.ui
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -24,21 +26,23 @@ fun AppUI(model : TheModel){
                 }
             }
             Row(){
-                LazyColumnFor(items = category_model.drinksOfChoosenCategory){
-                    Card(
-                        border = BorderStroke(2.dp, Color.Black),
-                        backgroundColor = Color.Cyan,
-                        modifier = Modifier.padding(2.dp)
-                    ) {
-                        loadDrinkImgAsync(it)
-                        Row(){
-                            Image(it.preview_img, "Image of " + it.name)
-                            Column(modifier = Modifier.padding(4.dp).fillMaxWidth()) {
-                                Text("Name: " + it.name)
+                LazyColumn{
+                    items(category_model.drinksOfChoosenCategory){
+                        Card(
+                            border = BorderStroke(2.dp, Color.Black),
+                            backgroundColor = Color.Cyan,
+                            modifier = Modifier.padding(2.dp)
+                        ) {
+                            loadDrinkImgAsync(it)
+                            Row(){
+                                Image(it.preview_img, "Image of " + it.name)
+                                Column(modifier = Modifier.padding(4.dp).fillMaxWidth()) {
+                                    Text("Name: " + it.name)
+                                }
                             }
                         }
+                        Spacer(modifier = Modifier.padding(4.dp))
                     }
-                    Spacer(modifier = Modifier.padding(4.dp))
                 }
             }
         }
