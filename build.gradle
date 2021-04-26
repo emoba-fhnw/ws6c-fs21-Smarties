@@ -1,13 +1,18 @@
+import org.gradle.api.tasks.Delete
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = "1.4.30"
 
-    def compose_release_version = "alpha12"
+    def compose_release_version = "beta01"
     ext.compose_version = "1.0.0-$compose_release_version"
+
+
+    ext.coroutines_version = '1.4.2'
 
     repositories {
         google()
+        mavenCentral()
         jcenter()
     }
     dependencies {
@@ -22,6 +27,7 @@ buildscript {
 allprojects {
     repositories {
         google()
+        mavenCentral()
         jcenter()
     }
 }

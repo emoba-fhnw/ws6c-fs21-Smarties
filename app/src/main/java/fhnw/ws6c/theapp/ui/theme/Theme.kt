@@ -50,7 +50,7 @@ private val appLightColors = Colors(
 fun AppTheme(darkTheme: Boolean, content: @Composable() () -> Unit) {
     MaterialTheme(
             colors     = if (darkTheme) appDarkColors else appLightColors,
-            typography = typography,
+//            typography = typography,
             shapes     = shapes,
             content    = content
     )

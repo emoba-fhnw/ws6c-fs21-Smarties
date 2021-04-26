@@ -1,6 +1,7 @@
 package fhnw.ws6c.theapp
 
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import fhnw.ws6c.EmobaApp
 import fhnw.ws6c.theapp.data.services.RemoteCategoryService
@@ -19,6 +20,7 @@ object TheApp : EmobaApp {
         model = TheModel(remoteCategoryService, remoteImageService)
     }
 
+    @ExperimentalFoundationApi
     @Composable
     override fun CreateUI() {
         AppUI(model)
