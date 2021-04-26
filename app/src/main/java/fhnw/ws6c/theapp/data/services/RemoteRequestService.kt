@@ -1,6 +1,7 @@
 package fhnw.ws6c.theapp.data.services
 
 import fhnw.ws6c.theapp.data.Drink
+import fhnw.ws6c.theapp.model.DataModifier
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -9,13 +10,13 @@ import java.net.URL
 import java.nio.charset.StandardCharsets
 import javax.net.ssl.HttpsURLConnection
 
-class RemoteCategoryService {
+class RemoteRequestService {
 
-    private val baseURL = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?"
+    private val baseURL = "https://www.thecocktaildb.com/api/json/v1/1/"
 
-    fun requestCategoryJson() : String {
+    fun requestJson(dataModifier: DataModifier) : String {
         try {
-            var url = URL("${baseURL}" + "c=Cocktail")
+            var url = URL("${baseURL}" + dataModifier.urlString)
 
             //connect
             val connection = url.openConnection() as HttpsURLConnection

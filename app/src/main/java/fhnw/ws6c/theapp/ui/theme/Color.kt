@@ -1,4 +1,4 @@
-package fhnw.emoba.freezerapp.ui.theme
+package fhnw.ws6c.theapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

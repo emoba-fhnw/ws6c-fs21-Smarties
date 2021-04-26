@@ -18,6 +18,13 @@ class Drink {
     var img         : ImageBitmap by mutableStateOf(defaultImage())
     var preview_img : ImageBitmap by mutableStateOf(defaultImage())
 
+
+    val glass           : String
+    val instructions    : String
+    val ingredients     : Set<String> = emptySet()
+    val meassurements   : Set<String> = emptySet()
+
+
     constructor(json : JSONObject){
         name = if(json.has("strDrink")){
             json.getString("strDrink")
@@ -40,5 +47,35 @@ class Drink {
             -1
         }
 
+        glass = if(json.has("strGlass")){
+            json.getString("strGlass")
+        }else{
+            ""
+        }
+        instructions = if(json.has("strInstructions")){
+            json.getString("strInstructions")
+        }else{
+            ""
+        }
+//        var i = 1
+//        while(i <= 15){
+//            if(json.has("strIngredient$i")) {
+//                if(json.getString("strIngredient$i").isNullOrEmpty()){
+//                    ingredients.toMutableSet().add(json.getString("strIngredient$i"))
+//                }
+//                i ++
+//            }
+//        }
+//        i = 0
+//        while(i <= 15){
+//            if(json.has("strMeasure$i")) {
+//                if(json.getString("strMeasure$i").isNullOrEmpty()){
+//                    meassurements.toMutableSet().add(json.getString("strMeasure$i"))
+//                }
+//                i ++
+//            }
+//        } //todo find a better way
     }
+
+    constructor() : this(JSONObject())
 }

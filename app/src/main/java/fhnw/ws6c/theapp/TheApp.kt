@@ -4,7 +4,7 @@ import androidx.activity.ComponentActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import fhnw.ws6c.EmobaApp
-import fhnw.ws6c.theapp.data.services.RemoteCategoryService
+import fhnw.ws6c.theapp.data.services.RemoteRequestService
 import fhnw.ws6c.theapp.data.services.RemoteImageService
 import fhnw.ws6c.theapp.model.TheModel
 import fhnw.ws6c.theapp.ui.AppUI
@@ -15,7 +15,7 @@ object TheApp : EmobaApp {
 
     override fun initialize(activity: ComponentActivity) {
         //install service
-        val remoteCategoryService = RemoteCategoryService()
+        val remoteCategoryService = RemoteRequestService()
         val remoteImageService = RemoteImageService()
         model = TheModel(remoteCategoryService, remoteImageService)
     }
@@ -25,6 +25,5 @@ object TheApp : EmobaApp {
     override fun CreateUI() {
         AppUI(model)
     }
-
 }
 
