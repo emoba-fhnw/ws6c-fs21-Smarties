@@ -1,6 +1,8 @@
 package fhnw.ws6c.theapp.ui.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -25,11 +27,17 @@ fun Recipe_Screen(model: TheModel){
 
 @Composable
 fun Content(model: TheModel){
-    with(model){
+    with(model.currentDrink){
         Column() {
-            Text("Id: " + currentDrink.id)
-            Text("Number of ingredients: " + currentDrink.ingredients.size)
-            Text("Glas: " + currentDrink.glass)
+            Text("Id: " + id)
+            Text("Number of ingredients: " + ingredients.size)
+            Text("Glas: " + glass)
+            Text("Ingredients: ")
+            LazyColumn{
+                items(ingredients.size){
+                    Text(meassurements.get(it) + " " + ingredients.get(it))
+                }
+            }
         }
     }
 }

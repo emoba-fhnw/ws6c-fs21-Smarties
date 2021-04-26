@@ -4,7 +4,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.ImageBitmapConfig
 import org.json.JSONObject
 
 
@@ -21,8 +20,8 @@ class Drink {
 
     val glass           : String
     val instructions    : String
-    val ingredients     : Set<String> = emptySet()
-    val meassurements   : Set<String> = emptySet()
+    val ingredients     : MutableList<String>  = mutableListOf()
+    val meassurements   : MutableList<String?> = mutableListOf()
 
 
     constructor(json : JSONObject){
@@ -57,24 +56,28 @@ class Drink {
         }else{
             ""
         }
-//        var i = 1
-//        while(i <= 15){
-//            if(json.has("strIngredient$i")) {
-//                if(json.getString("strIngredient$i").isNullOrEmpty()){
-//                    ingredients.toMutableSet().add(json.getString("strIngredient$i"))
-//                }
-//                i ++
-//            }
-//        }
-//        i = 0
-//        while(i <= 15){
-//            if(json.has("strMeasure$i")) {
-//                if(json.getString("strMeasure$i").isNullOrEmpty()){
-//                    meassurements.toMutableSet().add(json.getString("strMeasure$i"))
-//                }
-//                i ++
-//            }
-//        } //todo find a better way
+        var i = 1
+        while(i <= 15){
+            if(json.has("strIngredient$i")) {
+                val string = json.getString("strIngredient$i")
+                if(!string.equals("null") && !string.equals("")) {
+                    ingredients.add(string)
+                }
+            }
+            i ++
+        }
+        i = 0
+        while(i <= ingredients.size){
+            if(json.has("strMeasure$i")) {
+                val string = json.getString("strMeasure$i")
+                if(!string.equals("null")) {
+                    meassurements.add(string)
+                }else{
+                    meassurements.add("")
+                }
+            }
+            i ++
+        }
     }
 
     constructor() : this(JSONObject())

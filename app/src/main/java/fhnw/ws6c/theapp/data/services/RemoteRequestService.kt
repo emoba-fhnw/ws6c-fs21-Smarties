@@ -14,9 +14,9 @@ class RemoteRequestService {
 
     private val baseURL = "https://www.thecocktaildb.com/api/json/v1/1/"
 
-    fun requestJson(dataModifier: DataModifier) : String {
+    fun requestJson(dataModifier: DataModifier, additional: String = "") : String {
         try {
-            var url = URL("${baseURL}" + dataModifier.urlString)
+            var url = URL("${baseURL}" + dataModifier.urlString + additional)
 
             //connect
             val connection = url.openConnection() as HttpsURLConnection

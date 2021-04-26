@@ -50,7 +50,7 @@ private fun Body(model: TheModel) {
         loadDrinksOfChoosenCategoryAsync()
 
         LazyVerticalGrid(cells = GridCells.Adaptive(minSize = 100.dp)) {
-            items(category_model.drinksOfChoosenCategory) {
+            items(currentCategory.listOfDrinks) {
                 Card(
                     modifier = Modifier.padding(9.dp).clickable(
                         onClick = {currentScreen = Screen.RECIPE_SCREEN; currentDrink = it; loadAllDrinkDetailsAsync()} )

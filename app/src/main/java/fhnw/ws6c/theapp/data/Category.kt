@@ -1,6 +1,7 @@
 package fhnw.ws6c.theapp.data
 import org.json.JSONObject
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 
 class Category {
@@ -8,7 +9,7 @@ class Category {
     val listOfDrinks_URL : String
 
     //will be reloaded
-    val listOfDrinks : List<Drink> by mutableStateOf(emptyList())
+    var listOfDrinks : List<Drink> by mutableStateOf(emptyList())
 
 
     constructor(json : JSONObject){
@@ -19,4 +20,5 @@ class Category {
         }
     }
 
+    constructor() : this(JSONObject())
 }
