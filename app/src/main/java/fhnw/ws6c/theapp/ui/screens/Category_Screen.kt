@@ -53,7 +53,7 @@ private fun Body(model: TheModel) {
             items(currentCategory.listOfDrinks) {
                 Card(
                     modifier = Modifier.padding(9.dp).clickable(
-                        onClick = {currentScreen = Screen.RECIPE_SCREEN; currentDrink = it; loadAllDrinkDetailsAsync()} )
+                        onClick = {currentScreen = Screen.RECIPE_OVERVIEW_SCREEN; currentDrink = it; loadAllDrinkDetailsAsync()} )
                 ) {
                     loadDrinkImgAsync(it)
                     Column() {

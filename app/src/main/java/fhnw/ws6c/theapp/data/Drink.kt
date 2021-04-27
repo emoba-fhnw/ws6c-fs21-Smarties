@@ -20,7 +20,7 @@ class Drink {
 
     val glass           : String
     val instructions    : String
-    val ingredients     : MutableList<String>  = mutableListOf()
+    val ingredients     : MutableList<Ingredient>  = mutableListOf()
     val meassurements   : MutableList<String?> = mutableListOf()
 
 
@@ -61,7 +61,7 @@ class Drink {
             if(json.has("strIngredient$i")) {
                 val string = json.getString("strIngredient$i")
                 if(!string.equals("null") && !string.equals("")) {
-                    ingredients.add(string)
+                    ingredients.add(Ingredient(string))
                 }
             }
             i ++

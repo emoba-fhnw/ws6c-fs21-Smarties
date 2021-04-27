@@ -3,9 +3,9 @@ package fhnw.ws6c.theapp.model
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import fhnw.ws6c.theapp.TheApp
 import fhnw.ws6c.theapp.data.Category
 import fhnw.ws6c.theapp.data.Drink
+import fhnw.ws6c.theapp.data.Ingredient
 import fhnw.ws6c.theapp.data.services.RemoteRequestService
 import fhnw.ws6c.theapp.data.services.RemoteImageService
 import kotlinx.coroutines.CoroutineScope
@@ -42,6 +42,18 @@ class TheModel(val remoteRequestService: RemoteRequestService, val remoteImageSe
         modelScope.launch {
             drink.img = remoteImageService.requestImageBitmap(drink.img_url)
             drink.preview_img = remoteImageService.requestImageBitmap(drink.preview_img_url)
+        }
+        isLoading = false
+    }
+
+    fun loadIngredientImgAsync(ingredient : Ingredient){
+        isLoading = true
+        modelScope.launch {
+            var ingredient_url_name = ingredient.name.substring(0,ingredient.name.length).replace(" ", "%20")
+            println(ingredient_url_name)
+            ingredient.img_small = remoteImageService.requestImageBitmap("https://www.thecocktaildb.com/images/ingredients/" + ingredient_url_name + "-Small.png")
+            ingredient.img_medium = remoteImageService.requestImageBitmap("https://www.thecocktaildb.com/images/ingredients/" + ingredient_url_name + "-Medium.png")
+            ingredient.img_big = remoteImageService.requestImageBitmap("https://www.thecocktaildb.com/images/ingredients/" + ingredient_url_name + ".png")
         }
         isLoading = false
     }
