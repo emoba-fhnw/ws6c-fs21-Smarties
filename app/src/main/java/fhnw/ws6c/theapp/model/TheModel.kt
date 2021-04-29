@@ -68,4 +68,6 @@ class TheModel(val remoteRequestService: RemoteRequestService, val remoteImageSe
         }
         isLoading = false
     }
+
+
 }

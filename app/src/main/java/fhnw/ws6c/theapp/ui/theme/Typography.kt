@@ -21,7 +21,7 @@ val typography = Typography(
 
         // App Title
         h1 = TextStyle(
-                fontSize = 17.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Normal,
 //                lineHeight = 117.sp,
 //                letterSpacing = (-1.5).sp,
@@ -67,7 +67,7 @@ val typography = Typography(
 
         // Category Cocktail name
         body1 = TextStyle(
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.Normal
 //                lineHeight = 28.sp,
 //                letterSpacing = 0.15.sp,
