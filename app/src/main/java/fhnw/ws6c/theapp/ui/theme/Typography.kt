@@ -1,10 +1,12 @@
 package fhnw.ws6c.theapp.ui.theme
 
+import android.graphics.Color
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fhnw.ws6c.R
 
@@ -17,11 +19,12 @@ private val Roboto = FontFamily(
 val typography = Typography(
         defaultFontFamily = Roboto,
 
+        // App Title
         h1 = TextStyle(
-                fontSize = 96.sp,
-                fontWeight = FontWeight.Light,
-                lineHeight = 117.sp,
-                letterSpacing = (-1.5).sp
+                fontSize = 17.sp,
+                fontWeight = FontWeight.Normal,
+//                lineHeight = 117.sp,
+//                letterSpacing = (-1.5).sp,
         ),
         h2 = TextStyle(
                 fontSize = 60.sp,
@@ -61,11 +64,13 @@ val typography = Typography(
                 lineHeight = 24.sp,
                 letterSpacing = 0.1.sp
         ),
+
+        // Category Cocktail name
         body1 = TextStyle(
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal,
-                lineHeight = 28.sp,
-                letterSpacing = 0.15.sp
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal
+//                lineHeight = 28.sp,
+//                letterSpacing = 0.15.sp,
         ),
         body2 = TextStyle(
                 fontSize = 14.sp,

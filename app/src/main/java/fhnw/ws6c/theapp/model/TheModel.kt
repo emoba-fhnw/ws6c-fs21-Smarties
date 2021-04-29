@@ -20,7 +20,7 @@ class TheModel(val remoteRequestService: RemoteRequestService, val remoteImageSe
     private val modelScope = CoroutineScope(SupervisorJob() + Dispatchers.IO) //for loding data asynchrounously
 
     var currentScreen by mutableStateOf(Screen.CATEGORY_SCREEN)
-    var darkTheme   by mutableStateOf(false)
+    var darkTheme   by mutableStateOf(true)
         private set
 
     var currentDrink : Drink by mutableStateOf(Drink())
