@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import fhnw.ws6c.theapp.data.Category
 import fhnw.ws6c.theapp.data.Drink
 import fhnw.ws6c.theapp.data.Ingredient
+import fhnw.ws6c.theapp.data.RecipeStep
 import fhnw.ws6c.theapp.data.services.RemoteRequestService
 import fhnw.ws6c.theapp.data.services.RemoteImageService
 import kotlinx.coroutines.CoroutineScope
@@ -14,7 +15,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-class TheModel(val remoteRequestService: RemoteRequestService, val remoteImageService : RemoteImageService) {
+class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteImageService : RemoteImageService) {
     var isLoading       by mutableStateOf(false)
 
     private val modelScope = CoroutineScope(SupervisorJob() + Dispatchers.IO) //for loding data asynchrounously
@@ -50,7 +51,6 @@ class TheModel(val remoteRequestService: RemoteRequestService, val remoteImageSe
         isLoading = true
         modelScope.launch {
             var ingredient_url_name = ingredient.name.substring(0,ingredient.name.length).replace(" ", "%20")
-            println(ingredient_url_name)
             ingredient.img_small = remoteImageService.requestImageBitmap("https://www.thecocktaildb.com/images/ingredients/" + ingredient_url_name + "-Small.png")
             ingredient.img_medium = remoteImageService.requestImageBitmap("https://www.thecocktaildb.com/images/ingredients/" + ingredient_url_name + "-Medium.png")
             ingredient.img_big = remoteImageService.requestImageBitmap("https://www.thecocktaildb.com/images/ingredients/" + ingredient_url_name + ".png")
@@ -62,7 +62,6 @@ class TheModel(val remoteRequestService: RemoteRequestService, val remoteImageSe
         isLoading = true
         modelScope.launch {
             val jsonString = remoteRequestService.requestJson(DataModifier.LookUpDrinkDetailsById, currentDrink.id.toString())
-            println(jsonString)
             val drink = JSONObject(jsonString).getJSONArray("drinks").getJSONObject(0)
             currentDrink = Drink(drink)
         }

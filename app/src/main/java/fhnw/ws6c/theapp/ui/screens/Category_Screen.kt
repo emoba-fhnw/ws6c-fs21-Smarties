@@ -13,13 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import fhnw.ws6c.theapp.model.Screen
-import fhnw.ws6c.theapp.model.TheModel
+import fhnw.ws6c.theapp.model.CocktailModel
 import fhnw.ws6c.theapp.ui.theme.AppTheme
 
 
 @ExperimentalFoundationApi
 @Composable
-fun Category_Screen(model: TheModel){
+fun Category_Screen(model: CocktailModel){
     with(model){
         AppTheme(darkTheme) {
             Scaffold(
@@ -30,7 +30,7 @@ fun Category_Screen(model: TheModel){
 }
 
 @Composable
-fun TopBar(model: TheModel, title : String, icon : ImageVector, onClickAct : () -> Unit = {}){
+fun TopBar(model: CocktailModel, title : String, icon : ImageVector, onClickAct : () -> Unit = {}){
     with(model){
         TopAppBar(
             title = { Text(title, style = MaterialTheme.typography.h5,) },
@@ -45,7 +45,7 @@ fun TopBar(model: TheModel, title : String, icon : ImageVector, onClickAct : () 
 
 @ExperimentalFoundationApi
 @Composable
-private fun Body(model: TheModel) {
+private fun Body(model: CocktailModel) {
     with(model) {
         loadDrinksOfChoosenCategoryAsync()
 

@@ -7,7 +7,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "fhnw.emoba"
+        applicationId "fhnw.ws6capp"
         minSdkVersion 25
         targetSdkVersion 30
         versionCode 1
