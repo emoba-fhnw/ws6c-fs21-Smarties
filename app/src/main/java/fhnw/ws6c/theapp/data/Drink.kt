@@ -21,7 +21,7 @@ class Drink {
     val glass           : String
     val instructions    : String
     val ingredients     : MutableList<Ingredient>  = mutableListOf()
-    val meassurements   : MutableList<String?> = mutableListOf()
+    val meassurements   : MutableList<String> = mutableListOf()
 
 
     constructor(json : JSONObject){

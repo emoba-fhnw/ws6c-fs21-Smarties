@@ -78,7 +78,7 @@ private fun Content(model: CocktailModel) {
 
             // Start Button
             OutlinedButton(
-                onClick = { currentScreen = Screen.TUTORIAL_SCREEN },
+                onClick = { currentScreen = Screen.TUTORIAL_SCREEN; fillRecipeSteps() },
                 modifier = Modifier
                     .align(Alignment.End)
                     .fillMaxWidth(),
