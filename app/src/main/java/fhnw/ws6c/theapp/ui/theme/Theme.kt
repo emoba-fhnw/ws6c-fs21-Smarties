@@ -7,20 +7,20 @@ import androidx.compose.ui.graphics.Color
 
 private val appDarkColors = Colors(
     //Background colors
-    primary          = Color(0xFFBB86FC), //lila
+    primary          = Color(0xFF7EEBF5), //lila
     primaryVariant   = Color(0xFF3700B3),
-    secondary        = Color(0xFF5E487A), //dunkellila
+    secondary        = Color(0xFF5E487A),
     secondaryVariant = Color(0xFF03DAC6),
-    background       = Color(0xFF121212),
-    surface          = Color(0xFF121212),
+    background       = Color(0xFF000000), //black
+    surface          = Color(0xFF000000),
     error            = Color(0xFFCF6679),
     
     //Typography and icon colors
-    onPrimary        = Color.Black,
-    onSecondary      = Color.Gray,
-    onBackground     = Color.White,
-    onSurface        = Color.White,
-    onError          = Color.Black,
+    onPrimary        = Color(0xFF000000),
+    onSecondary      = Color(0xFF000000),
+    onBackground     = Color(0xFF7EEBF5),
+    onSurface        = Color(0xFF7EEBF5),   // turquoise
+    onError          = Color(0xFF000000),
     
     isLight = false
 )
@@ -50,7 +50,7 @@ private val appLightColors = Colors(
 fun AppTheme(darkTheme: Boolean, content: @Composable() () -> Unit) {
     MaterialTheme(
             colors     = if (darkTheme) appDarkColors else appLightColors,
-//            typography = typography,
+            typography = typography,
             shapes     = shapes,
             content    = content
     )

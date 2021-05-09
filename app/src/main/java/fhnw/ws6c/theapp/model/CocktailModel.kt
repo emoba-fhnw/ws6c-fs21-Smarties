@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import fhnw.ws6c.theapp.data.Category
 import fhnw.ws6c.theapp.data.Drink
 import fhnw.ws6c.theapp.data.Ingredient
-import fhnw.ws6c.theapp.data.RecipeStep
 import fhnw.ws6c.theapp.data.services.RemoteRequestService
 import fhnw.ws6c.theapp.data.services.RemoteImageService
 import kotlinx.coroutines.CoroutineScope
@@ -21,7 +20,7 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
     private val modelScope = CoroutineScope(SupervisorJob() + Dispatchers.IO) //for loding data asynchrounously
 
     var currentScreen by mutableStateOf(Screen.CATEGORY_SCREEN)
-    var darkTheme   by mutableStateOf(false)
+    var darkTheme   by mutableStateOf(true)
         private set
 
     var currentDrink : Drink by mutableStateOf(Drink())
@@ -67,4 +66,6 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
         }
         isLoading = false
     }
+
+
 }
