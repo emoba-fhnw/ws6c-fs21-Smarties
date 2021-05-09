@@ -86,10 +86,10 @@ val typography = Typography(
                 letterSpacing = 1.25.sp
         ),
         caption = TextStyle(
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                lineHeight = 16.sp,
-                letterSpacing = 0.4.sp
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Normal,
+                lineHeight = 20.sp,
+                letterSpacing = 0.5.sp
         ),
         overline = TextStyle(
                 fontSize = 12.sp,

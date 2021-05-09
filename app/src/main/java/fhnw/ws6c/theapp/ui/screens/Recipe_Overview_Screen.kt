@@ -3,8 +3,11 @@ package fhnw.ws6c.theapp.ui.screens
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -13,8 +16,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import fhnw.ws6c.R
 import fhnw.ws6c.theapp.model.Screen
@@ -78,9 +83,12 @@ private fun Content(model: CocktailModel) {
                     .align(Alignment.End)
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
-                border = BorderStroke(2.dp, Color.White)
+                border = BorderStroke(
+                    2.dp,
+                    Brush.horizontalGradient(colors = listOf(Color(0xFFFF00F5), Color(0xFF95A5F5)))
+                )
             ) {
-                Text("Let's start")
+                Text("Let's start", color = MaterialTheme.colors.onSecondary)
             }
         }
 
@@ -93,8 +101,8 @@ fun Ingredients_Box(model: CocktailModel) {
     with(model) {
         LazyVerticalGrid(
             cells = GridCells.Adaptive(minSize = 100.dp),
-            modifier = Modifier.padding(5.dp, 0.dp, 5.dp, 0.dp),
-            ) {
+            modifier = Modifier.padding(5.dp, 0.dp, 5.dp, 0.dp)
+        ) {
             items(currentDrink.ingredients.size) {
                 Card(
                     modifier = Modifier
@@ -119,9 +127,11 @@ fun Ingredients_Box(model: CocktailModel) {
                                     .size(60.dp),
                             )
                         }
-                        Text(currentDrink.meassurements.get(it) + " " + currentDrink.ingredients.get(
-                                it).name,
-                           // textAlign = TextAlign.Center,
+                        Text(
+                            currentDrink.meassurements.get(it) + " " + currentDrink.ingredients.get(
+                                it
+                            ).name,
+                            // textAlign = TextAlign.Center,
                             Modifier
                                 .requiredWidth(70.dp)
                         )

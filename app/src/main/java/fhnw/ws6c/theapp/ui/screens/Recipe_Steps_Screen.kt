@@ -7,6 +7,7 @@ import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -15,11 +16,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import fhnw.ws6c.R
 import fhnw.ws6c.theapp.data.RecipeStep
+import fhnw.ws6c.theapp.TheApp.model
 import fhnw.ws6c.theapp.model.Screen
 import fhnw.ws6c.theapp.model.CocktailModel
 import fhnw.ws6c.theapp.ui.TopBar
@@ -49,7 +54,7 @@ private fun Content(model: CocktailModel){
         val state = rememberDraggableState {delta -> offsetX += delta}
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(22.dp)
+            .padding(21.dp, 74.dp, 21.dp, 0.dp)
             .draggable(
                 state = state,
                 orientation = Orientation.Horizontal,
@@ -97,11 +102,28 @@ private fun Instruction_Box(model : CocktailModel, step : RecipeStep){
     with(model){
         Box(
             modifier = Modifier
+                .border(
+                    1.dp,
+                    Brush.horizontalGradient(colors = listOf(Color(0xFFFF00F5), Color(0xFF95A5F5))),
+                    RoundedCornerShape(10.dp)
+
+                ).requiredWidth(318.dp).requiredHeight(288.dp)
                 .background(Color.Black)
                 .verticalScroll(rememberScrollState())
                 .padding(32.dp)
         ){
-            Text(step.instruction)
+            Column(modifier = Modifier.padding(18.dp)) {
+                Text(
+                    "Instructions ",
+                    style = MaterialTheme.typography.caption,
+                    fontWeight = FontWeight.Thin,
+                    // modifier = Modifier.
+                    //brush = Brush.horizontalGradient(colors = listOf(Color(0xFFFF00F5), Color(0xFF95A5F5))),
+                    color = Color.White
+                )
+                Text(step.instruction, style = MaterialTheme.typography.caption,
+                    color = Color.White)
+            }
         }
     }
 }
