@@ -1,6 +1,9 @@
 package fhnw.ws6c.theapp.ui.screens
 
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -8,18 +11,22 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import fhnw.ws6c.R
-import fhnw.ws6c.theapp.TheApp.model
 import fhnw.ws6c.theapp.data.RecipeStep
 import fhnw.ws6c.theapp.model.Screen
 import fhnw.ws6c.theapp.model.CocktailModel
 import fhnw.ws6c.theapp.ui.TopBar
 import fhnw.ws6c.theapp.ui.theme.AppTheme
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import fhnw.ws6c.theapp.ui.theme.MyColors
 
 @ExperimentalFoundationApi
 @Composable
@@ -38,19 +45,29 @@ fun Recipe_Steps_Screen(model: CocktailModel){
 @Composable
 private fun Content(model: CocktailModel){
     with(model){
+        var offsetX by remember{ mutableStateOf(0f)}
+        val state = rememberDraggableState {delta -> offsetX += delta}
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(22.dp)
-//            .swipeable(state = rememberSwipeableState(initialValue = 0), )
-            .clickable{
-                if(currentRecipeStepIndex < recipeSteps.size-1){
-                    currentRecipeStepIndex ++
-                }
-                else{
-                    currentScreen = Screen.DRINK_COMPLETED_SCREEN
-                    currentRecipeStepIndex = 0
-                }
-            }
+            .draggable(
+                state = state,
+                orientation = Orientation.Horizontal,
+                onDragStopped = {
+                    if(offsetX > 200){
+                        if(currentRecipeStepIndex > 0){
+                            currentRecipeStepIndex --
+                        }
+                    }else if(offsetX < -200){
+                        if (currentRecipeStepIndex < recipeSteps.size - 1) {
+                            currentRecipeStepIndex++
+                        } else {
+                            currentScreen = Screen.DRINK_COMPLETED_SCREEN
+                            currentRecipeStepIndex = 0
+                        }
+                    }
+                    offsetX = 0f
+                    println("DragStopped"); println(state.toString()); println("OffsetX: "+ offsetX) })
             , horizontalAlignment = Alignment.CenterHorizontally) {
             loadDrinkImgAsync(currentDrink)
 
@@ -68,7 +85,7 @@ private fun Step_Content(model: CocktailModel, recipeStep: RecipeStep){
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text("Instructions: ")
+        Text("Instructions: ", color = getColor(MyColors.Text))
 
         Instruction_Box(model, recipeStep)
 

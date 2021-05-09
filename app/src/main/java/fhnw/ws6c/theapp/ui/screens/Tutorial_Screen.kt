@@ -1,13 +1,15 @@
 package fhnw.ws6c.theapp.ui.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -36,7 +38,13 @@ fun Tutorial_Screen(model: CocktailModel){
 @Composable
 private fun Body(model : CocktailModel){
     with(model){
-        Column(modifier = Modifier.fillMaxSize().clickable { currentScreen = Screen.RECIPE_STEPS_SCREEN },
+        var offsetX by remember{ mutableStateOf(0f)}
+        val state = rememberDraggableState {delta -> offsetX += delta}
+        Column(modifier = Modifier.fillMaxSize()
+            .draggable(
+                state = state,
+                orientation = Orientation.Horizontal,
+                onDragStopped = { if(offsetX < -200) currentScreen = Screen.RECIPE_STEPS_SCREEN; offsetX = 0f }),
             horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(modifier = Modifier.padding(20.dp))
             Text("Use Speech Recognition", fontStyle = FontStyle.Italic)

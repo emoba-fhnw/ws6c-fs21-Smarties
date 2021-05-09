@@ -3,12 +3,14 @@ package fhnw.ws6c.theapp.model
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import fhnw.ws6c.theapp.data.Category
 import fhnw.ws6c.theapp.data.Drink
 import fhnw.ws6c.theapp.data.Ingredient
 import fhnw.ws6c.theapp.data.RecipeStep
 import fhnw.ws6c.theapp.data.services.RemoteRequestService
 import fhnw.ws6c.theapp.data.services.RemoteImageService
+import fhnw.ws6c.theapp.ui.theme.MyColors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -138,6 +140,14 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
     fun CharSequence.unaccent(): String {
         val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
         return REGEX_UNACCENT.replace(temp, "")
+    }
+
+    fun getColor(myColors: MyColors) : Color {
+        return if(darkTheme){
+            myColors.dark_color
+        }else{
+            myColors.light_color
+        }
     }
 
 }
