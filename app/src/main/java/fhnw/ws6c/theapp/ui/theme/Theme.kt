@@ -16,10 +16,10 @@ private val appDarkColors = Colors(
     error            = Color(0xFFCF6679),
     
     //Typography and icon colors
-    onPrimary        = Color(0xFF000000),
-    onSecondary      = Color(0xFF000000),
+    onPrimary        = Color(0xFF7EEBF5), //turquoise
+    onSecondary      = Color(0xFFFFFFFF), //white
     onBackground     = Color(0xFF7EEBF5),
-    onSurface        = Color(0xFF7EEBF5),   // turquoise
+    onSurface        = Color(0xFF7EEBF5),
     onError          = Color(0xFF000000),
     
     isLight = false
