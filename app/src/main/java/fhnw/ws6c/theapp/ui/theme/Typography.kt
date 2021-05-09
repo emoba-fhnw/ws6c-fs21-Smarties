@@ -12,7 +12,8 @@ import fhnw.ws6c.R
 
 private val Roboto = FontFamily(
         Font(R.font.roboto_thin,        FontWeight.Thin),
-        Font(R.font.roboto_regular,     FontWeight.Normal)
+        Font(R.font.roboto_regular,     FontWeight.Normal),
+        Font(R.font.roboto_italic,      FontWeight.Light)
 )
 
 // Set of Material typography styles to start with
@@ -73,8 +74,8 @@ val typography = Typography(
 //                letterSpacing = 0.15.sp,
         ),
         body2 = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Light,
                 lineHeight = 20.sp,
                 letterSpacing = 0.25.sp
         ),

@@ -2,8 +2,13 @@ package fhnw.ws6c.theapp.ui.screens
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
@@ -11,8 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import fhnw.ws6c.R
 import fhnw.ws6c.theapp.model.Screen
 import fhnw.ws6c.theapp.model.CocktailModel
 import fhnw.ws6c.theapp.ui.TopBar
@@ -20,11 +29,17 @@ import fhnw.ws6c.theapp.ui.theme.AppTheme
 
 @ExperimentalFoundationApi
 @Composable
-fun Recipe_Screen(model: CocktailModel){
-    with(model){
+fun Recipe_Screen(model: CocktailModel) {
+    with(model) {
         AppTheme(darkTheme) {
             Scaffold(
-                topBar = { TopBar(model, currentDrink.name, Icons.Filled.ArrowBackIos, {currentScreen = Screen.CATEGORY_SCREEN}) }){
+                topBar = {
+                    TopBar(
+                        model,
+                        currentDrink.name,
+                        Icons.Filled.ArrowBackIos,
+                        { currentScreen = Screen.CATEGORY_SCREEN })
+                }) {
                 Content(model)
             }
         }
@@ -33,25 +48,43 @@ fun Recipe_Screen(model: CocktailModel){
 
 @ExperimentalFoundationApi
 @Composable
-private fun Content(model: CocktailModel){
-    with(model){
-        Column(modifier = Modifier.fillMaxSize().padding(22.dp),
-            horizontalAlignment = Alignment.CenterHorizontally) {
+private fun Content(model: CocktailModel) {
+    with(model) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(21.dp, 34.dp, 21.dp, 0.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             loadDrinkImgAsync(currentDrink)
-            Image(currentDrink.img, "Image of " + currentDrink.name,
+            Image(
+                currentDrink.img, "Image of " + currentDrink.name,
                 modifier = Modifier
                     .clip(CircleShape)
                     .align(Alignment.CenterHorizontally)
-                    .size(150.dp))
-            Text(currentDrink.name, modifier = Modifier.align(Alignment.CenterHorizontally))
-
-            Spacer(modifier = Modifier.padding(20.dp))
-
-            Text("Ingredients: ")
+                    .size(150.dp)
+            )
+            Spacer(modifier = Modifier.height(50.dp))
+            // Ingredients
+            Text(
+                "Ingredients ",
+                style = MaterialTheme.typography.body2,
+                modifier = Modifier.align(Alignment.Start)
+            )           // make it kursiv
+            Spacer(modifier = Modifier.height(21.dp))
             Ingredients_Box(model)
-            Spacer(modifier = Modifier.padding(20.dp))
-            OutlinedButton(onClick = {currentScreen = Screen.TUTORIAL_SCREEN},
-            modifier = Modifier.align(Alignment.CenterHorizontally).fillMaxWidth()){
+
+            Spacer(modifier = Modifier.height(21.dp))
+
+            // Start Button
+            OutlinedButton(
+                onClick = { currentScreen = Screen.TUTORIAL_SCREEN },
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                border = BorderStroke(2.dp, Color.White)
+            ) {
                 Text("Let's start")
             }
         }
@@ -61,31 +94,47 @@ private fun Content(model: CocktailModel){
 
 @ExperimentalFoundationApi
 @Composable
-fun Ingredients_Box(model: CocktailModel){
-    with(model){
-        Box(
-            modifier = Modifier
-                .background(Color.LightGray)
-                .horizontalScroll(rememberScrollState())
-                .fillMaxWidth()
-                .border(2.dp, Color.Black)
-        ){
-            LazyColumn(
-                modifier = Modifier.height(200.dp)
+fun Ingredients_Box(model: CocktailModel) {
+    with(model) {
+        LazyVerticalGrid(
+            cells = GridCells.Adaptive(minSize = 100.dp),
+            modifier = Modifier.padding(5.dp, 0.dp, 5.dp, 0.dp),
             ) {
-                items(currentDrink.ingredients.size){
-                    Card(
+            items(currentDrink.ingredients.size) {
+                Card(
+                    modifier = Modifier
+                        .padding(0.dp)
+                ) {
+                    loadIngredientImgAsync(currentDrink.ingredients.get(it))
+                    Column(
                         modifier = Modifier
-                            .padding(9.dp)
-                            .width(100.dp)
-                            .height(112.dp)
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        loadIngredientImgAsync(currentDrink.ingredients.get(it))
-                        Image(currentDrink.ingredients.get(it).img_small, "Image of " + currentDrink.ingredients.get(it).name)
-                        Text(currentDrink.meassurements.get(it) + " " + currentDrink.ingredients.get(it).name)
+                        Box(modifier = Modifier.requiredSize(70.dp)) {
+                            Image(
+                                painterResource(id = R.drawable.ic_circle),
+                                "Background",
+                                modifier = Modifier.requiredSize(60.dp)
+                            )
+                            Image(
+                                currentDrink.ingredients.get(it).img_small,
+                                "Image of " + currentDrink.ingredients.get(it).name,
+                                modifier = Modifier
+                                    .size(60.dp),
+                            )
+                        }
+                        Text(currentDrink.meassurements.get(it) + " " + currentDrink.ingredients.get(
+                                it).name,
+                           // textAlign = TextAlign.Center,
+                            Modifier
+                                .requiredWidth(70.dp)
+                        )
+                        Spacer(modifier = Modifier.height(21.dp))
                     }
                 }
             }
         }
     }
 }
+

@@ -111,7 +111,7 @@ private fun Body(model: CocktailModel) {
 //                                        modifier = Modifier.requiredSize(27.dp),
 //                                    )
                                     IconButton(onClick = { /*TODO*/ }) {
-                                        Icon(
+                                        Image(
                                             painter = painterResource(id = R.drawable.icon_star_unfilled),
                                             contentDescription = "No favourite",
                                             modifier = Modifier.requiredSize(27.dp)
