@@ -9,7 +9,7 @@ private val appDarkColors = Colors(
     //Background colors
     primary          = Color(0xFF7EEBF5), //lila
     primaryVariant   = Color(0xFF3700B3),
-    secondary        = Color(0xFF5E487A), // topbar and icon :(
+    secondary        = Color(0xFF5E487A),
     secondaryVariant = Color(0xFF03DAC6),
     background       = Color(0xFF000000), //black
     surface          = Color(0xFF000000),
