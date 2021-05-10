@@ -7,7 +7,6 @@ import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -28,7 +27,6 @@ import fhnw.ws6c.theapp.ui.TopBar
 import fhnw.ws6c.theapp.ui.theme.AppTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.draw.clip
 import fhnw.ws6c.theapp.ui.theme.MyColors
 import fhnw.ws6c.theapp.ui.theme.MySvgs
 
@@ -146,9 +144,8 @@ private fun Ingredients_BoxOfStep(model: CocktailModel, step: RecipeStep) {
                 .requiredHeight(112.dp),
         ) {
             items(step.ingredient.size) {
-                Card(
+                Box(
                     modifier = Modifier.padding(0.dp),
-                    backgroundColor = Color.Transparent
                 ) {
                     Column(
                         modifier = Modifier.fillMaxSize(),
