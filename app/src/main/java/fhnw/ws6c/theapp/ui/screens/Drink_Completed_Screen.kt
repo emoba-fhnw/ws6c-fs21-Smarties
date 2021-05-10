@@ -5,14 +5,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -21,9 +17,9 @@ import androidx.compose.ui.unit.sp
 import fhnw.ws6c.R
 import fhnw.ws6c.theapp.model.Screen
 import fhnw.ws6c.theapp.model.CocktailModel
-import fhnw.ws6c.theapp.ui.TopBar
 import fhnw.ws6c.theapp.ui.theme.AppTheme
 import fhnw.ws6c.theapp.ui.theme.MyColors
+import fhnw.ws6c.theapp.ui.theme.MySvgs
 
 
 @Composable
@@ -77,7 +73,7 @@ private fun Content(model: CocktailModel) {
             )
             IconButton(onClick = { /*TODO*/ }) {
                 Image(
-                    painter = painterResource(id = R.drawable.icon_star_unfilled),
+                    painter = painterResource(id = getSvg(MySvgs.StarUnfilled)),
                     contentDescription = "No favourite",
                     modifier = Modifier
                         .requiredSize(27.dp)

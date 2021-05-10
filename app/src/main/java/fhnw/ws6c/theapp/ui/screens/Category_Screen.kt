@@ -1,6 +1,5 @@
 package fhnw.ws6c.theapp.ui
 
-import android.graphics.Color.alpha
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
@@ -11,18 +10,16 @@ import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import fhnw.ws6c.R
 import fhnw.ws6c.theapp.model.Screen
 import fhnw.ws6c.theapp.model.CocktailModel
 import fhnw.ws6c.theapp.ui.theme.AppTheme
 import fhnw.ws6c.theapp.ui.theme.MyColors
+import fhnw.ws6c.theapp.ui.theme.MySvgs
 
 @ExperimentalFoundationApi
 @Composable
@@ -120,7 +117,7 @@ private fun Body(model: CocktailModel) {
                                     Box(Modifier.padding(2.dp)) {
                                         IconButton(onClick = { /*TODO*/ }) {
                                             Image(
-                                                painter = painterResource(id = R.drawable.icon_star_unfilled),
+                                                painter = painterResource(id = getSvg(MySvgs.StarUnfilled)),
                                                 contentDescription = "No favourite",
                                                 modifier = Modifier.requiredSize(27.dp)
                                             )

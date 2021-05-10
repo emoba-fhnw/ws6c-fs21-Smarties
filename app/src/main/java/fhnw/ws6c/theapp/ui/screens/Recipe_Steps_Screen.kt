@@ -17,13 +17,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import fhnw.ws6c.R
 import fhnw.ws6c.theapp.data.RecipeStep
 import fhnw.ws6c.theapp.model.Screen
 import fhnw.ws6c.theapp.model.CocktailModel
@@ -33,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import fhnw.ws6c.theapp.ui.theme.MyColors
+import fhnw.ws6c.theapp.ui.theme.MySvgs
 
 @ExperimentalFoundationApi
 @Composable
@@ -158,7 +156,7 @@ private fun Ingredients_BoxOfStep(model: CocktailModel, step: RecipeStep) {
                     ) {
                         Box(modifier = Modifier.requiredSize(70.dp)) {
                             Image(
-                                painterResource(id = R.drawable.ic_circle),
+                                painterResource(id = getSvg(MySvgs.Circle)),
                                 "Background",
                                 modifier = Modifier.requiredSize(60.dp)
                             )
@@ -184,49 +182,31 @@ private fun Ingredients_BoxOfStep(model: CocktailModel, step: RecipeStep) {
 @Composable
 fun BottomAppBar(model : CocktailModel) {
     with(model){
-        Box(
-            modifier = Modifier
-                .clip(CircleShape)
-                .requiredSize(11.dp)
-                .background(
-                    Brush.horizontalGradient(
-                        colors = listOf(
-                            Color(0xFFFF00F5),
-                            Color(0xFF95A5F5)
+        BottomAppBar(backgroundColor = Color.Transparent){
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp, 0.dp, 5.dp, 0.dp),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = { recording() }) {
+                    if (isRecording.value) {
+                        Image(
+                            painterResource(id = getSvg(MySvgs.MicOn)),
+                            contentDescription = "Microphone Off"
                         )
-                    )
-                )
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(5.dp, 0.dp, 5.dp, 0.dp),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = { recording() }) {
-                if (isRecording.value) {     /*TODO*/
-                    Image(
-                        painterResource(id = R.drawable.ic_microphone_on),
-                        contentDescription = "Microphone Off"
-                    )
-                } else {
-                    Image(
-                        painterResource(id = R.drawable.ic_microphone_off),
-                        contentDescription = "Microphone Off"
-                    )
+                    } else {
+                        Image(
+                            painterResource(id = getSvg(MySvgs.MicOff)),
+                            contentDescription = "Microphone Off"
+                        )
 
+                    }
                 }
             }
         }
     }
 }
-
-//@Composable
-//fun BottomRow(){
-//    BottomAppBar(){
-//
-//    }
-//}
 
 

@@ -12,7 +12,6 @@ import fhnw.ws6c.theapp.data.RecipeStep
 import fhnw.ws6c.theapp.data.services.RemoteRequestService
 import fhnw.ws6c.theapp.data.services.RemoteImageService
 import fhnw.ws6c.theapp.ui.theme.MyColors
-import fhnw.ws6c.theapp.ui.theme.MySprites
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -32,6 +31,7 @@ import androidx.core.content.ContextCompat
 import fhnw.ws6c.theapp.RecListener
 import java.util.*
 import androidx.activity.ComponentActivity
+import fhnw.ws6c.theapp.ui.theme.MySvgs
 
 class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteImageService : RemoteImageService, val context : ComponentActivity) {
     var isLoading       by mutableStateOf(false)
@@ -165,13 +165,13 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
         }
     }
 
-//    fun getSprite(mySprites: MySprites) : Image {
-//        return if(darkTheme) {
-//            mySprites.dark_img
-//        } else {
-//            mySprites.light_img
-//        }
-//    }
+    fun getSvg(mySvgs : MySvgs) : Int{
+        return if(darkTheme){
+            mySvgs.dark_svg
+        }else{
+            mySvgs.light_svg
+        }
+    }
 
 
 
