@@ -148,9 +148,8 @@ private fun Ingredients_BoxOfStep(model: CocktailModel, step: RecipeStep) {
                 .requiredHeight(112.dp),
         ) {
             items(step.ingredient.size) {
-                Card(
+                Box(
                     modifier = Modifier.padding(0.dp),
-                    backgroundColor = Color.Transparent
                 ) {
                     Column(
                         modifier = Modifier.fillMaxSize(),
@@ -184,7 +183,7 @@ private fun Ingredients_BoxOfStep(model: CocktailModel, step: RecipeStep) {
 @Composable
 fun BottomAppBar(model : CocktailModel) {
     with(model){
-        Box(
+   /*     Box(
             modifier = Modifier
                 .clip(CircleShape)
                 .requiredSize(11.dp)
@@ -196,7 +195,7 @@ fun BottomAppBar(model : CocktailModel) {
                         )
                     )
                 )
-        )
+        )*/
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -205,10 +204,10 @@ fun BottomAppBar(model : CocktailModel) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = { recording() }) {
-                if (isRecording.value) {     /*TODO*/
+                if (isRecording.value) {
                     Image(
                         painterResource(id = R.drawable.ic_microphone_on),
-                        contentDescription = "Microphone Off"
+                        contentDescription = "Microphone On"
                     )
                 } else {
                     Image(
@@ -221,12 +220,4 @@ fun BottomAppBar(model : CocktailModel) {
         }
     }
 }
-
-//@Composable
-//fun BottomRow(){
-//    BottomAppBar(){
-//
-//    }
-//}
-
 

@@ -107,9 +107,8 @@ fun Ingredients_Box(model: CocktailModel) {
             modifier = Modifier.padding(5.dp, 0.dp, 5.dp, 0.dp).requiredHeight(230.dp).background(Color.Transparent)
         ) {
             items(currentDrink.ingredients.size) {
-                Card(
+                Box(
                     modifier = Modifier.padding(0.dp).border(0.dp, Color.Transparent),
-                    backgroundColor = Color.Transparent
                 ) {
                     loadIngredientImgAsync(currentDrink.ingredients.get(it))
                     Column(
