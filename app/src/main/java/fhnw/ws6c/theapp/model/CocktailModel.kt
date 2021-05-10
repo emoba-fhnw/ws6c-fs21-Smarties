@@ -1,6 +1,5 @@
 package fhnw.ws6c.theapp.model
 
-import android.media.Image
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -46,8 +45,13 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
 
     var recipeSteps = mutableListOf<RecipeStep>()
     var currentRecipeStepIndex by mutableStateOf(0)
+
+    var isRecording = mutableStateOf(false)
+    var audio_text = mutableStateOf("")
+
+
     //**********************************************************************************************
-    //functions
+    //get Data
 
     fun loadDrinksOfChoosenCategoryAsync(){
         isLoading = true;
@@ -87,6 +91,9 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
         isLoading = false
     }
 
+    //*************************************************************************************************************
+    //Create Recipe-Steps
+
     fun fillRecipeSteps(){
         println("LoadingRecipeSteps")
         recipeSteps = emptyList<RecipeStep>().toMutableList()
@@ -97,13 +104,11 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
             sentenceList[i] = sentenceList[i] + ". "
         }
 
-
         val allIngredientsPerSentence = mutableListOf<List<Ingredient>>()
         var ingredientsOfCurrentSentence = mutableListOf<Ingredient>()
 
         val allMeassurementsPerSentence = mutableListOf<List<String>>()
         var meassurementsOfCurrentSentence = mutableListOf<String>()
-
 
         val allNotUsedIngredients = mutableListOf<Ingredient>()
 
@@ -125,7 +130,6 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
             ingredientsOfCurrentSentence = mutableListOf<Ingredient>()
             meassurementsOfCurrentSentence = mutableListOf<String>()
         }
-
 
         //create RecipeSteps
         var string = ""
@@ -156,6 +160,8 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
         return REGEX_UNACCENT.replace(temp, "")
     }
 
+    //*************************************************************************************************************
+    //for Theming
 
     fun getColor(myColors: MyColors) : Brush {
         return if(darkTheme){
@@ -173,18 +179,8 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
         }
     }
 
-
-
     //*************************************************************************************************************
     //Speech
-
-    var isRecording = mutableStateOf(false)
-
-    var audio_text = mutableStateOf("")
-
-    var number = 0
-    var printed_text = mutableStateOf("")
-
 
     fun recording(){
         grantMicrophoneAccess()
@@ -271,6 +267,4 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
             recording()
         }
     }
-
-
 }
