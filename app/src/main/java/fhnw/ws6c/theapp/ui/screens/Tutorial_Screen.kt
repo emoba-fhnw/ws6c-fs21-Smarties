@@ -40,6 +40,7 @@ private fun Body(model : CocktailModel){
     with(model){
         var offsetX by remember{ mutableStateOf(0f)}
         val state = rememberDraggableState {delta -> offsetX += delta}
+        recording()
         Column(modifier = Modifier.fillMaxSize()
             .draggable(
                 state = state,

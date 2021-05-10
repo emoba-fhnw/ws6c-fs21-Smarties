@@ -10,14 +10,14 @@ import fhnw.ws6c.theapp.model.CocktailModel
 import fhnw.ws6c.theapp.ui.AppUI
 
 
-object TheApp : EmobaApp {
+class TheApp(var context : ComponentActivity) : EmobaApp {
     lateinit var model : CocktailModel
 
     override fun initialize(activity: ComponentActivity) {
         //install service
         val remoteCategoryService = RemoteRequestService()
         val remoteImageService = RemoteImageService()
-        model = CocktailModel(remoteCategoryService, remoteImageService)
+        model = CocktailModel(remoteCategoryService, remoteImageService, context)
     }
 
     @ExperimentalFoundationApi

@@ -19,8 +19,21 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.text.Normalizer
+import android.Manifest
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import fhnw.ws6c.theapp.RecListener
+import java.util.*
+import androidx.activity.ComponentActivity
 
-class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteImageService : RemoteImageService) {
+class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteImageService : RemoteImageService, val context : ComponentActivity) {
     var isLoading       by mutableStateOf(false)
 
     private val modelScope = CoroutineScope(SupervisorJob() + Dispatchers.IO) //for loding data asynchrounously
@@ -143,6 +156,7 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
         return REGEX_UNACCENT.replace(temp, "")
     }
 
+
     fun getColor(myColors: MyColors) : Brush {
         return if(darkTheme){
             myColors.dark_color
@@ -151,14 +165,112 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
         }
     }
 
-    fun getSprite(mySprites: MySprites) : Image {
-        return if(darkTheme) {
-            mySprites.dark_img
-        } else {
-            mySprites.light_img
+//    fun getSprite(mySprites: MySprites) : Image {
+//        return if(darkTheme) {
+//            mySprites.dark_img
+//        } else {
+//            mySprites.light_img
+//        }
+//    }
+
+
+
+    //*************************************************************************************************************
+    //Speech
+
+    var isRecording = mutableStateOf(false)
+
+    var audio_text = mutableStateOf("")
+
+    var number = 0
+    var printed_text = mutableStateOf("")
+
+
+    fun recording(){
+        grantMicrophoneAccess()
+        grantAvailabilityOfSpeechRecognizer()
+        startListening()
+        isRecording.value = true
+    }
+
+    fun grantMicrophoneAccess() {
+
+        var isGranted = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
+
+        var text = "Wenn du die Sprachsteuerung verwenden möchtest brauchen wir die Berechtigung dein Microphon verwenden zu dürfen"
+
+        if(!isGranted){
+            Toast.makeText(context,text, Toast.LENGTH_SHORT).show()
+
+            ActivityCompat.requestPermissions(
+                context,
+                arrayOf(Manifest.permission.RECORD_AUDIO),
+                0
+            )
         }
     }
 
+    fun grantAvailabilityOfSpeechRecognizer(){
+        if (!SpeechRecognizer.isRecognitionAvailable(context)) {
+            val appPackageName = "com.google.android.googlequicksearchbox"
+            try {
+                context.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=$appPackageName")
+                    )
+                )
+            } catch (anfe: ActivityNotFoundException) {
+                context.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                    )
+                )
+            }
+        }
+        println(SpeechRecognizer.isRecognitionAvailable(context))
+    }
+
+    fun startListening(){
+        var sp : SpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
+
+        sp.setRecognitionListener(RecListener(this))
+
+        val i = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+        i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something!")
+
+        sp.startListening(i)
+    }
+
+    fun onTextResult(){
+        if(audio_text.value.toLowerCase().contains("back")){
+            if (currentRecipeStepIndex > 0) {
+                currentRecipeStepIndex--
+            }
+        }
+        else if(audio_text.value.toLowerCase().contains("next")){
+
+            if(currentScreen == Screen.TUTORIAL_SCREEN){
+                currentScreen = Screen.RECIPE_STEPS_SCREEN
+            }
+            else if(currentScreen == Screen.RECIPE_STEPS_SCREEN){
+                if (currentRecipeStepIndex < recipeSteps.size - 1) {
+                    currentRecipeStepIndex++
+                } else {
+                    currentScreen = Screen.DRINK_COMPLETED_SCREEN
+                    currentRecipeStepIndex = 0
+                }
+            }
+
+        }
+
+        if(!audio_text.value.toLowerCase().contains("stop") && (currentScreen == Screen.RECIPE_STEPS_SCREEN || currentScreen == Screen.TUTORIAL_SCREEN)){
+            recording()
+        }
+    }
 
 
 }

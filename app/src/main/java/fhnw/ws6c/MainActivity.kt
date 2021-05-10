@@ -12,7 +12,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        app = TheApp
+        app = TheApp(this)
 
 
         app.initialize(activity = this)

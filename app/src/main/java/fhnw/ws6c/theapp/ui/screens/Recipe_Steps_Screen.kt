@@ -25,7 +25,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import fhnw.ws6c.R
 import fhnw.ws6c.theapp.data.RecipeStep
-import fhnw.ws6c.theapp.TheApp.model
 import fhnw.ws6c.theapp.model.Screen
 import fhnw.ws6c.theapp.model.CocktailModel
 import fhnw.ws6c.theapp.ui.TopBar
@@ -46,9 +45,9 @@ fun Recipe_Steps_Screen(model: CocktailModel) {
                         model,
                         currentDrink.name,
                         Icons.Filled.Close,
-                        { currentScreen = Screen.RECIPE_OVERVIEW_SCREEN })
+                        { currentScreen = Screen.RECIPE_OVERVIEW_SCREEN; currentRecipeStepIndex = 0 })
                 },
-                bottomBar = { BottomAppBar() }) {
+                bottomBar = { BottomAppBar(model) }) {
                 Content(model)
             }
         }
@@ -103,8 +102,6 @@ private fun Step_Content(model: CocktailModel, recipeStep: RecipeStep) {
         Ingredients_BoxOfStep(model, recipeStep)
 
         Spacer(modifier = Modifier.padding(20.dp))
-
-//        Text("Instructions: ", color = getColor(MyColors.Text))
 
         Instruction_Box(model, recipeStep)
 
@@ -185,44 +182,51 @@ private fun Ingredients_BoxOfStep(model: CocktailModel, step: RecipeStep) {
 
 
 @Composable
-fun BottomAppBar() {
-    Box(
-        modifier = Modifier
-            .clip(CircleShape)
-            .requiredSize(11.dp)
-            .background(
-                Brush.horizontalGradient(
-                    colors = listOf(
-                        Color(0xFFFF00F5),
-                        Color(0xFF95A5F5)
+fun BottomAppBar(model : CocktailModel) {
+    with(model){
+        Box(
+            modifier = Modifier
+                .clip(CircleShape)
+                .requiredSize(11.dp)
+                .background(
+                    Brush.horizontalGradient(
+                        colors = listOf(
+                            Color(0xFFFF00F5),
+                            Color(0xFF95A5F5)
+                        )
                     )
                 )
-            )
-    )
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(5.dp, 0.dp, 5.dp, 0.dp),
-        horizontalArrangement = Arrangement.End,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = { /*TODO*/ }) {
-            if (true) {     /*TODO*/
-                Image(
-                    painterResource(id = R.drawable.ic_microphone_on),
-                    contentDescription = "Microphone Off"
-                )
-            } else {
-                Image(
-                    painterResource(id = R.drawable.ic_microphone_off),
-                    contentDescription = "Microphone Off"
-                )
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(5.dp, 0.dp, 5.dp, 0.dp),
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = { recording() }) {
+                if (isRecording.value) {     /*TODO*/
+                    Image(
+                        painterResource(id = R.drawable.ic_microphone_on),
+                        contentDescription = "Microphone Off"
+                    )
+                } else {
+                    Image(
+                        painterResource(id = R.drawable.ic_microphone_off),
+                        contentDescription = "Microphone Off"
+                    )
 
+                }
             }
         }
     }
 }
 
-
+//@Composable
+//fun BottomRow(){
+//    BottomAppBar(){
+//
+//    }
+//}
 
 
