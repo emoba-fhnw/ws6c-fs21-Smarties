@@ -27,19 +27,19 @@ private val appDarkColors = Colors(
 
 private val appLightColors = Colors(
     //Background colors
-        primary          = Color(0xFF04275C),
+        primary          = Color.White,
         primaryVariant   = Color(0xFF465D81),
         secondary        = Color(0xFF7C92B4),
         
         secondaryVariant = Color(0xFFB7C3D3),
-        background       = Color.White,
-        surface          = Color.White,
+        background       = Color(0xFFA06CF4),
+        surface          = Color(0xFFA06CF4),
         error            = Color(0xFFB00020),
 
     //Typography and icon colors
         onPrimary        = Color.White, //Color.White
         onSecondary      = Color.Gray,
-        onBackground     = Color.Black,
+        onBackground     = Color.White,
         onSurface        = Color.Black,
         onError          = Color.White,
         

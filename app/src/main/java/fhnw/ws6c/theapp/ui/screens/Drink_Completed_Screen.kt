@@ -23,6 +23,7 @@ import fhnw.ws6c.theapp.model.Screen
 import fhnw.ws6c.theapp.model.CocktailModel
 import fhnw.ws6c.theapp.ui.TopBar
 import fhnw.ws6c.theapp.ui.theme.AppTheme
+import fhnw.ws6c.theapp.ui.theme.MyColors
 
 
 @Composable
@@ -92,17 +93,9 @@ private fun Content(model: CocktailModel) {
                             .align(CenterHorizontally)
                             .fillMaxWidth(),
                         shape = RoundedCornerShape(20.dp),
-                        border = BorderStroke(
-                            2.dp,
-                            Brush.horizontalGradient(
-                                colors = listOf(
-                                    Color(0xFFFF00F5),
-                                    Color(0xFF95A5F5)
-                                )
-                            )
-                        )
+                        border = BorderStroke(2.dp, getColor(MyColors.Borders))
                     ) {
-                        Text("Go to my bar", color = MaterialTheme.colors.onSecondary)
+                        Text("Go to my bar", color = Color.White)
                     }
                     Spacer(modifier = Modifier.height(21.dp))
                     OutlinedButton(
@@ -111,17 +104,9 @@ private fun Content(model: CocktailModel) {
                             .align(CenterHorizontally)
                             .fillMaxWidth(),
                         shape = RoundedCornerShape(20.dp),
-                        border = BorderStroke(
-                            2.dp,
-                            Brush.horizontalGradient(
-                                colors = listOf(
-                                    Color(0xFFFF00F5),
-                                    Color(0xFF95A5F5)
-                                )
-                            )
-                        )
+                        border = BorderStroke(2.dp, getColor(MyColors.Borders))
                     ) {
-                        Text("Give me more cocktails", color = MaterialTheme.colors.onSecondary)
+                        Text("Give me more cocktails", color = Color.White)
                     }
                 }
             }

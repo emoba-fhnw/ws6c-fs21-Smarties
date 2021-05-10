@@ -3,6 +3,7 @@ package fhnw.ws6c.theapp.model
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import fhnw.ws6c.theapp.data.Category
 import fhnw.ws6c.theapp.data.Drink
@@ -25,7 +26,6 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
 
     var currentScreen by mutableStateOf(Screen.CATEGORY_SCREEN)
     var darkTheme   by mutableStateOf(true)
-        private set
 
     var currentDrink : Drink by mutableStateOf(Drink())
     val currentCategory : Category by mutableStateOf(Category())
@@ -142,7 +142,7 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
         return REGEX_UNACCENT.replace(temp, "")
     }
 
-    fun getColor(myColors: MyColors) : Color {
+    fun getColor(myColors: MyColors) : Brush {
         return if(darkTheme){
             myColors.dark_color
         }else{
