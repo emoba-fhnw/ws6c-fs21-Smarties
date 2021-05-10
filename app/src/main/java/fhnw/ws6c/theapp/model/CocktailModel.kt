@@ -151,6 +151,7 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
         }
     }
 
+    /*
     fun getSprite(mySprites: MySprites) : Image {
         return if(darkTheme) {
             mySprites.dark_img
@@ -158,7 +159,7 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
             mySprites.light_img
         }
     }
-
+*/
 
 
 }

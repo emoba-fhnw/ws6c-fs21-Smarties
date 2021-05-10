@@ -4,9 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/je_tr/Documents/test/ws6c-fs21-Smarties/app/src/main/res/drawable/ic_cocktail.xml" value="0.1" />
+        <entry key="..\:/Users/je_tr/Documents/test/ws6c-fs21-Smarties/app/src/main/res/drawable/ic_mic_dm.xml" value="0.1" />
+        <entry key="..\:/Users/je_tr/Documents/test/ws6c-fs21-Smarties/app/src/main/res/drawable/ic_mic_lm.xml" value="0.1" />
+        <entry key="..\:/Users/je_tr/Documents/test/ws6c-fs21-Smarties/app/src/main/res/drawable/ic_micro_off_dm.xml" value="0.1" />
+        <entry key="..\:/Users/je_tr/Documents/test/ws6c-fs21-Smarties/app/src/main/res/drawable/ic_micro_off_lm.xml" value="0.1" />
+        <entry key="..\:/Users/je_tr/Documents/test/ws6c-fs21-Smarties/app/src/main/res/drawable/ic_micro_on_dm.xml" value="0.1" />
+        <entry key="..\:/Users/je_tr/Documents/test/ws6c-fs21-Smarties/app/src/main/res/drawable/ic_micro_on_lm.xml" value="0.1" />
+        <entry key="..\:/Users/je_tr/Documents/test/ws6c-fs21-Smarties/app/src/main/res/drawable/ic_swipe_dm.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19074074074074074" />
-        <entry key="app/src/main/res/drawable/ic_cocktail.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.19074074074074074" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.19074074074074074" />
       </map>
