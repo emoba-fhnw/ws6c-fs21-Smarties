@@ -35,11 +35,17 @@ import fhnw.ws6c.theapp.ui.theme.MyColors
 
 @ExperimentalFoundationApi
 @Composable
-fun Recipe_Steps_Screen(model: CocktailModel){
-    with(model){
+fun Recipe_Steps_Screen(model: CocktailModel) {
+    with(model) {
         AppTheme(darkTheme) {
             Scaffold(
-                topBar = { TopBar(model, currentDrink.name, Icons.Filled.Close, {currentScreen = Screen.RECIPE_OVERVIEW_SCREEN}) }){
+                topBar = {
+                    TopBar(
+                        model,
+                        currentDrink.name,
+                        Icons.Filled.Close,
+                        { currentScreen = Screen.RECIPE_OVERVIEW_SCREEN })
+                }) {
                 Content(model)
             }
         }
@@ -48,32 +54,34 @@ fun Recipe_Steps_Screen(model: CocktailModel){
 
 @ExperimentalFoundationApi
 @Composable
-private fun Content(model: CocktailModel){
-    with(model){
-        var offsetX by remember{ mutableStateOf(0f)}
-        val state = rememberDraggableState {delta -> offsetX += delta}
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(21.dp, 74.dp, 21.dp, 0.dp)
-            .draggable(
-                state = state,
-                orientation = Orientation.Horizontal,
-                onDragStopped = {
-                    if(offsetX > 200){
-                        if(currentRecipeStepIndex > 0){
-                            currentRecipeStepIndex --
+private fun Content(model: CocktailModel) {
+    with(model) {
+        var offsetX by remember { mutableStateOf(0f) }
+        val state = rememberDraggableState { delta -> offsetX += delta }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(21.dp, 74.dp, 21.dp, 0.dp)
+                .draggable(
+                    state = state,
+                    orientation = Orientation.Horizontal,
+                    onDragStopped = {
+                        if (offsetX > 200) {
+                            if (currentRecipeStepIndex > 0) {
+                                currentRecipeStepIndex--
+                            }
+                        } else if (offsetX < -200) {
+                            if (currentRecipeStepIndex < recipeSteps.size - 1) {
+                                currentRecipeStepIndex++
+                            } else {
+                                currentScreen = Screen.DRINK_COMPLETED_SCREEN
+                                currentRecipeStepIndex = 0
+                            }
                         }
-                    }else if(offsetX < -200){
-                        if (currentRecipeStepIndex < recipeSteps.size - 1) {
-                            currentRecipeStepIndex++
-                        } else {
-                            currentScreen = Screen.DRINK_COMPLETED_SCREEN
-                            currentRecipeStepIndex = 0
-                        }
-                    }
-                    offsetX = 0f
-                    println("DragStopped"); println(state.toString()); println("OffsetX: "+ offsetX) })
-            , horizontalAlignment = Alignment.CenterHorizontally) {
+                        offsetX = 0f
+                        println("DragStopped"); println(state.toString()); println("OffsetX: " + offsetX)
+                    }), horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             loadDrinkImgAsync(currentDrink)
 
             Step_Content(model, recipeSteps[currentRecipeStepIndex])
@@ -84,13 +92,13 @@ private fun Content(model: CocktailModel){
 
 @ExperimentalFoundationApi
 @Composable
-private fun Step_Content(model: CocktailModel, recipeStep: RecipeStep){
-    with(model){
+private fun Step_Content(model: CocktailModel, recipeStep: RecipeStep) {
+    with(model) {
         Ingredients_BoxOfStep(model, recipeStep)
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text("Instructions: ", color = getColor(MyColors.Text))
+//        Text("Instructions: ", color = getColor(MyColors.Text))
 
         Instruction_Box(model, recipeStep)
 
@@ -98,31 +106,34 @@ private fun Step_Content(model: CocktailModel, recipeStep: RecipeStep){
 }
 
 @Composable
-private fun Instruction_Box(model : CocktailModel, step : RecipeStep){
-    with(model){
+private fun Instruction_Box(model: CocktailModel, step: RecipeStep) {
+    with(model) {
         Box(
             modifier = Modifier
                 .border(
                     1.dp,
                     Brush.horizontalGradient(colors = listOf(Color(0xFFFF00F5), Color(0xFF95A5F5))),
                     RoundedCornerShape(10.dp)
-
-                ).requiredWidth(318.dp).requiredHeight(288.dp)
+                )
+                .requiredWidth(318.dp)
+                .requiredHeight(288.dp)
                 .background(Color.Black)
                 .verticalScroll(rememberScrollState())
-                .padding(32.dp)
-        ){
-            Column(modifier = Modifier.padding(18.dp)) {
+        ) {
+            Column(modifier = Modifier.padding(15.dp)) {
                 Text(
-                    "Instructions ",
+                    "Instructions",
                     style = MaterialTheme.typography.caption,
                     fontWeight = FontWeight.Thin,
                     // modifier = Modifier.
                     //brush = Brush.horizontalGradient(colors = listOf(Color(0xFFFF00F5), Color(0xFF95A5F5))),
                     color = Color.White
                 )
-                Text(step.instruction, style = MaterialTheme.typography.caption,
-                    color = Color.White)
+                Spacer(modifier = Modifier.height(21.dp))
+                Text(
+                    step.instruction, style = MaterialTheme.typography.caption,
+                    color = Color.White
+                )
             }
         }
     }
@@ -135,7 +146,9 @@ private fun Ingredients_BoxOfStep(model: CocktailModel, step: RecipeStep) {
     with(model) {
         LazyVerticalGrid(
             cells = GridCells.Adaptive(minSize = 100.dp),
-            modifier = Modifier.padding(5.dp, 0.dp, 5.dp, 0.dp),
+            modifier = Modifier
+                .padding(5.dp, 0.dp, 5.dp, 0.dp)
+                .requiredHeight(112.dp),
         ) {
             items(step.ingredient.size) {
                 Card(
@@ -160,7 +173,8 @@ private fun Ingredients_BoxOfStep(model: CocktailModel, step: RecipeStep) {
                                     .size(60.dp),
                             )
                         }
-                        Text(step.meassurement[it] + " " +  step.ingredient[it].name,
+                        Text(
+                            step.meassurement[it] + " " + step.ingredient[it].name,
                             Modifier
                                 .requiredWidth(70.dp)
                         )

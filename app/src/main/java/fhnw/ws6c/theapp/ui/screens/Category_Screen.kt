@@ -1,14 +1,17 @@
 package fhnw.ws6c.theapp.ui
 
+import android.graphics.Color.alpha
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -69,6 +72,11 @@ private fun Body(model: CocktailModel) {
             items(currentCategory.listOfDrinks) {
                 Card(
                     modifier = Modifier
+                        .border(
+                            1.dp,
+                            Color.Black,
+                            RoundedCornerShape(10.dp)
+                        )
                         .padding(4.5.dp)
                         .clickable(
                             onClick = {

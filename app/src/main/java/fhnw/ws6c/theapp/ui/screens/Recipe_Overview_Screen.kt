@@ -1,6 +1,7 @@
 package fhnw.ws6c.theapp.ui.screens
 
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
@@ -102,7 +103,9 @@ fun Ingredients_Box(model: CocktailModel) {
     with(model) {
         LazyVerticalGrid(
             cells = GridCells.Adaptive(minSize = 100.dp),
-            modifier = Modifier.padding(5.dp, 0.dp, 5.dp, 0.dp)
+            modifier = Modifier
+                .padding(5.dp, 0.dp, 5.dp, 0.dp)
+                .requiredHeight(230.dp)
         ) {
             items(currentDrink.ingredients.size) {
                 Card(
