@@ -190,12 +190,12 @@ fun BottomAppBar(model : CocktailModel) {
                 IconButton(onClick = { recording() }) {
                     if (isRecording.value) {
                         Image(
-                            painterResource(id = getSvg(MySvgs.MicOn)),
+                            painterResource(id = getSvg(MySvgs.MicOff)),
                             contentDescription = "Microphone Off"
                         )
                     } else {
                         Image(
-                            painterResource(id = getSvg(MySvgs.MicOff)),
+                            painterResource(id = getSvg(MySvgs.MicOn)),
                             contentDescription = "Microphone Off"
                         )
 
