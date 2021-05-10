@@ -10,7 +10,6 @@ enum class MyColors(val light_color: Brush, val dark_color: Brush) {
     Text(               Brush.verticalGradient(colors = listOf(getColor("#FBFBFB"), getColor("#FBFBFB"))),  Brush.horizontalGradient(colors = listOf( getColor("#FBFBFB"), getColor("#FBFBFB"))))
 }
 
-
 private fun getColor(colorString: String): Color {
     return Color(android.graphics.Color.parseColor(colorString))
 }

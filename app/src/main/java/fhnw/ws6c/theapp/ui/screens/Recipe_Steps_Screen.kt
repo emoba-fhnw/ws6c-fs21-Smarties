@@ -7,6 +7,7 @@ import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -31,6 +32,7 @@ import fhnw.ws6c.theapp.ui.TopBar
 import fhnw.ws6c.theapp.ui.theme.AppTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.clip
 import fhnw.ws6c.theapp.ui.theme.MyColors
 
 @ExperimentalFoundationApi
@@ -45,7 +47,8 @@ fun Recipe_Steps_Screen(model: CocktailModel) {
                         currentDrink.name,
                         Icons.Filled.Close,
                         { currentScreen = Screen.RECIPE_OVERVIEW_SCREEN })
-                }) {
+                },
+                bottomBar = { BottomAppBar() }) {
                 Content(model)
             }
         }
@@ -60,7 +63,7 @@ private fun Content(model: CocktailModel) {
         val state = rememberDraggableState { delta -> offsetX += delta }
         Row(
             modifier = Modifier.background(getColor(MyColors.Background))
-        ){
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -162,7 +165,9 @@ private fun Ingredients_BoxOfStep(model: CocktailModel, step: RecipeStep) {
                                 "Background",
                                 modifier = Modifier.requiredSize(60.dp)
                             )
-                            Image(step.ingredient[it].img_small, "Image of " + step.ingredient[it].name,
+                            Image(
+                                step.ingredient[it].img_small,
+                                "Image of " + step.ingredient[it].name,
                                 modifier = Modifier.size(60.dp),
                             )
                         }
@@ -177,3 +182,47 @@ private fun Ingredients_BoxOfStep(model: CocktailModel, step: RecipeStep) {
         }
     }
 }
+
+
+@Composable
+fun BottomAppBar() {
+    Box(
+        modifier = Modifier
+            .clip(CircleShape)
+            .requiredSize(11.dp)
+            .background(
+                Brush.horizontalGradient(
+                    colors = listOf(
+                        Color(0xFFFF00F5),
+                        Color(0xFF95A5F5)
+                    )
+                )
+            )
+    )
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(5.dp, 0.dp, 5.dp, 0.dp),
+        horizontalArrangement = Arrangement.End,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(onClick = { /*TODO*/ }) {
+            if (true) {     /*TODO*/
+                Image(
+                    painterResource(id = R.drawable.ic_microphone_on),
+                    contentDescription = "Microphone Off"
+                )
+            } else {
+                Image(
+                    painterResource(id = R.drawable.ic_microphone_off),
+                    contentDescription = "Microphone Off"
+                )
+
+            }
+        }
+    }
+}
+
+
+
+

@@ -1,10 +1,10 @@
 package fhnw.ws6c.theapp.model
 
+import android.media.Image
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import fhnw.ws6c.theapp.data.Category
 import fhnw.ws6c.theapp.data.Drink
 import fhnw.ws6c.theapp.data.Ingredient
@@ -12,6 +12,7 @@ import fhnw.ws6c.theapp.data.RecipeStep
 import fhnw.ws6c.theapp.data.services.RemoteRequestService
 import fhnw.ws6c.theapp.data.services.RemoteImageService
 import fhnw.ws6c.theapp.ui.theme.MyColors
+import fhnw.ws6c.theapp.ui.theme.MySprites
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -149,5 +150,15 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
             myColors.light_color
         }
     }
+
+    fun getSprite(mySprites: MySprites) : Image {
+        return if(darkTheme) {
+            mySprites.dark_img
+        } else {
+            mySprites.light_img
+        }
+    }
+
+
 
 }
