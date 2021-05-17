@@ -6,7 +6,9 @@ import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -27,6 +29,7 @@ import fhnw.ws6c.theapp.ui.TopBar
 import fhnw.ws6c.theapp.ui.theme.AppTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import fhnw.ws6c.R
 import fhnw.ws6c.theapp.ui.theme.MyColors
 import fhnw.ws6c.theapp.ui.theme.MySvgs
 
@@ -183,27 +186,59 @@ fun BottomAppBar(model : CocktailModel) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(5.dp, 0.dp, 5.dp, 0.dp),
-                horizontalArrangement = Arrangement.End,
+                    .padding(53.dp, 0.dp, 5.dp, 0.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { recording() }) {
-                    if (isRecording.value) {
-                        Image(
-                            painterResource(id = getSvg(MySvgs.MicOff)),
-                            contentDescription = "Microphone Off"
-                        )
-                    } else {
-                        Image(
-                            painterResource(id = getSvg(MySvgs.MicOn)),
-                            contentDescription = "Microphone Off"
-                        )
-
-                    }
-                }
+                Text("")
+                stepCircles(model)
+                microphone(model)
             }
         }
     }
 }
 
 
+@Composable
+fun stepCircles(model : CocktailModel){
+    with(model){
+        LazyRow(
+        ){
+            items(recipeSteps.size){
+                if(currentRecipeStepIndex === it){
+                    Image(
+                        painterResource(id = getSvg(fhnw.ws6c.theapp.ui.theme.MySvgs.FilledStepCircle)),
+                        contentDescription = "Microphone Off",
+                        modifier = Modifier.padding(2.dp, 0.dp, 2.dp, 0.dp)
+                    )
+                }else{
+                    Image(
+                        painterResource(id = fhnw.ws6c.R.drawable.ic_step_circle_transparent),
+                        contentDescription = "Microphone Off",
+                        modifier = Modifier.padding(2.dp, 0.dp, 2.dp, 0.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun microphone(model : CocktailModel){
+    with(model){
+        IconButton(onClick = { recording() }) {
+            if (isRecording.value) {
+                Image(
+                    painterResource(id = getSvg(fhnw.ws6c.theapp.ui.theme.MySvgs.MicOff)),
+                    contentDescription = "Microphone Off"
+                )
+            } else {
+                Image(
+                    painterResource(id = getSvg(fhnw.ws6c.theapp.ui.theme.MySvgs.MicOn)),
+                    contentDescription = "Microphone Off"
+                )
+
+            }
+        }
+    }
+}

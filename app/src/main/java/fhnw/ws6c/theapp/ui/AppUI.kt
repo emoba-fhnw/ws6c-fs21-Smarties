@@ -14,11 +14,10 @@ import fhnw.ws6c.theapp.ui.screens.Tutorial_Screen
 @ExperimentalFoundationApi
 @Composable
 fun AppUI(model: CocktailModel) {
-    val scaffoldState = rememberScaffoldState()
     with(model){
         Crossfade(targetState = currentScreen) { screen ->
             when(screen){
-                Screen.CATEGORY_SCREEN  -> { Category_Screen(model) } //todo: scaffold übergeben
+                Screen.CATEGORY_SCREEN  -> { Category_Screen(model) }
                 Screen.RECIPE_OVERVIEW_SCREEN    -> { Recipe_Screen(model)}
                 Screen.TUTORIAL_SCREEN  -> { Tutorial_Screen(model)}
                 Screen.RECIPE_STEPS_SCREEN  -> { Recipe_Steps_Screen(model)}
