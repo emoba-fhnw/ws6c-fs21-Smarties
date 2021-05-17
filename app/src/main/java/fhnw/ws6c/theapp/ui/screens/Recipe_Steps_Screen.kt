@@ -29,6 +29,7 @@ import fhnw.ws6c.theapp.ui.TopBar
 import fhnw.ws6c.theapp.ui.theme.AppTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.style.TextAlign
 import fhnw.ws6c.R
 import fhnw.ws6c.theapp.ui.theme.MyColors
 import fhnw.ws6c.theapp.ui.theme.MySvgs
@@ -65,7 +66,6 @@ private fun Content(model: CocktailModel) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(21.dp, 74.dp, 21.dp, 0.dp)
                     .draggable(
                         state = state,
                         orientation = Orientation.Horizontal,
@@ -98,12 +98,60 @@ private fun Content(model: CocktailModel) {
 @Composable
 private fun Step_Content(model: CocktailModel, recipeStep: RecipeStep) {
     with(model) {
-        Ingredients_BoxOfStep(model, recipeStep)
+        Column(
+            modifier = Modifier.fillMaxSize().padding(21.dp, 0.dp, 21.dp, 60.dp),
+            verticalArrangement = Arrangement.SpaceEvenly) {
 
-        Spacer(modifier = Modifier.padding(20.dp))
+            Text("Required Ingredients ",
+                style = MaterialTheme.typography.body2,
+                modifier = Modifier.align(Alignment.Start))
 
-        Instruction_Box(model, recipeStep)
+            Ingredients_BoxOfStep(model, recipeStep)
 
+            Instruction_Box(model, recipeStep)
+        }
+    }
+}
+
+
+@ExperimentalFoundationApi
+@Composable
+private fun Ingredients_BoxOfStep(model: CocktailModel, step: RecipeStep) {
+    with(model) {
+        LazyVerticalGrid(
+            cells = GridCells.Adaptive(minSize = 100.dp),
+            modifier = Modifier
+                .padding(5.dp, 0.dp, 5.dp, 0.dp)
+                .requiredHeight(200.dp),
+        ) {
+            items(step.ingredient.size) {
+                Box(
+                    modifier = Modifier.padding(0.dp, 6.dp),
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Box(modifier = Modifier.requiredSize(42.dp)) {
+                            Image(
+                                painterResource(id = getSvg(MySvgs.Circle)),
+                                "Background",
+                                modifier = Modifier.requiredSize(40.dp)
+                            )
+                            Image(
+                                step.ingredient[it].img_small,
+                                "Image of " + step.ingredient[it].name,
+                                modifier = Modifier.size(40.dp),
+                            )
+                        }
+                        Text(
+                            step.meassurement[it] + " " + step.ingredient[it].name,
+                            modifier = Modifier.requiredWidth(70.dp), textAlign = TextAlign.Center
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -114,7 +162,7 @@ private fun Instruction_Box(model: CocktailModel, step: RecipeStep) {
             modifier = Modifier
                 .border(1.dp, getColor(MyColors.Borders), RoundedCornerShape(10.dp))
                 .requiredWidth(318.dp)
-                .requiredHeight(288.dp)
+                .requiredHeight(250.dp)
                 .background(Color.Transparent)
                 .verticalScroll(rememberScrollState())
         ) {
@@ -136,47 +184,7 @@ private fun Instruction_Box(model: CocktailModel, step: RecipeStep) {
 }
 
 
-@ExperimentalFoundationApi
-@Composable
-private fun Ingredients_BoxOfStep(model: CocktailModel, step: RecipeStep) {
-    with(model) {
-        LazyVerticalGrid(
-            cells = GridCells.Adaptive(minSize = 100.dp),
-            modifier = Modifier
-                .padding(5.dp, 0.dp, 5.dp, 0.dp)
-                .requiredHeight(112.dp),
-        ) {
-            items(step.ingredient.size) {
-                Box(
-                    modifier = Modifier.padding(0.dp),
-                ) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Box(modifier = Modifier.requiredSize(70.dp)) {
-                            Image(
-                                painterResource(id = getSvg(MySvgs.Circle)),
-                                "Background",
-                                modifier = Modifier.requiredSize(60.dp)
-                            )
-                            Image(
-                                step.ingredient[it].img_small,
-                                "Image of " + step.ingredient[it].name,
-                                modifier = Modifier.size(60.dp),
-                            )
-                        }
-                        Text(
-                            step.meassurement[it] + " " + step.ingredient[it].name,
-                            Modifier.requiredWidth(70.dp)
-                        )
-                        Spacer(modifier = Modifier.height(21.dp))
-                    }
-                }
-            }
-        }
-    }
-}
+
 
 
 @Composable

@@ -39,73 +39,85 @@ private fun Content(model: CocktailModel) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(21.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(21.dp, 0.dp, 21.dp, 0.dp),
+            horizontalAlignment = CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly,
         ) {
             Image(
                 painterResource(id = R.drawable.ic_cocktail),
                 "Cocktail",
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(21.dp))
+
             Text(
                 "Enjoy your drink".toUpperCase(),
                 modifier = Modifier.align(CenterHorizontally),
-                fontSize = 36.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
             )
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                "You successfully finished mixing",
-                modifier = Modifier.align(CenterHorizontally),
-                fontSize = 16.sp
-            )
-            Text(
-                currentDrink.name.toUpperCase(),
-                modifier = Modifier.align(CenterHorizontally),
-                fontSize = 16.sp
-            )
-            Spacer(modifier = Modifier.height(48.dp))
-            Text(
-                "Did you like the drink?",
-                modifier = Modifier.align(CenterHorizontally),
-                fontSize = 16.sp
-            )
-            IconButton(onClick = { /*TODO*/ }) {
-                Image(
-                    painter = painterResource(id = getSvg(MySvgs.StarUnfilled)),
-                    contentDescription = "No favourite",
-                    modifier = Modifier
-                        .requiredSize(27.dp)
-                        .align(CenterHorizontally)
+
+            Column() {
+                Text(
+                    "You successfully finished mixing",
+                    modifier = Modifier.align(CenterHorizontally),
+                    fontSize = 16.sp
+                )
+                Text(
+                    currentDrink.name.toUpperCase(),
+                    modifier = Modifier.align(CenterHorizontally),
+                    fontSize = 16.sp
                 )
             }
-            Spacer(modifier = Modifier.height(48.dp))
-            Row(verticalAlignment = Alignment.Bottom) {
-                Column() {
-                    OutlinedButton(
-                        onClick = { /*TODO*/ },
+
+            Column(horizontalAlignment = CenterHorizontally,){
+                Text(
+                    "Did you like the drink?",
+                    modifier = Modifier.align(CenterHorizontally),
+                    fontSize = 16.sp
+                )
+                IconButton(onClick = { /*TODO*/ }) {
+                    Image(
+                        painter = painterResource(id = getSvg(MySvgs.StarUnfilled)),
+                        contentDescription = "No favourite",
                         modifier = Modifier
+                            .requiredSize(27.dp)
                             .align(CenterHorizontally)
-                            .fillMaxWidth(),
-                        shape = RoundedCornerShape(20.dp),
-                        border = BorderStroke(2.dp, getColor(MyColors.Borders))
-                    ) {
-                        Text("Go to my bar", color = Color.White)
-                    }
-                    Spacer(modifier = Modifier.height(21.dp))
-                    OutlinedButton(
-                        onClick = { currentScreen = Screen.CATEGORY_SCREEN },
-                        modifier = Modifier
-                            .align(CenterHorizontally)
-                            .fillMaxWidth(),
-                        shape = RoundedCornerShape(20.dp),
-                        border = BorderStroke(2.dp, getColor(MyColors.Borders))
-                    ) {
-                        Text("Give me more cocktails", color = Color.White)
-                    }
+                    )
                 }
             }
+            OutlinedButton(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .align(CenterHorizontally)
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                border = BorderStroke(2.dp, getColor(MyColors.Borders))
+            ) {
+                Text("Go to my bar", color = Color.White)
+            }
+
+            OutlinedButton(
+                onClick = { currentScreen = Screen.CATEGORY_SCREEN },
+                modifier = Modifier
+                    .align(CenterHorizontally)
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                border = BorderStroke(2.dp, getColor(MyColors.Borders))
+            ) {
+                Text("Give me more cocktails", color = Color.White)
+            }
+
+            OutlinedButton(
+                onClick = { currentScreen = Screen.RECIPE_OVERVIEW_SCREEN },
+                modifier = Modifier
+                    .align(CenterHorizontally)
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                border = BorderStroke(2.dp, getColor(MyColors.Borders))
+            ) {
+                Text("Mix it again", color = Color.White)
+            }
+
         }
     }
 }

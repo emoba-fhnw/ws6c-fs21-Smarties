@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import fhnw.ws6c.theapp.model.Screen
 import fhnw.ws6c.theapp.model.CocktailModel
@@ -50,8 +51,9 @@ private fun Content(model: CocktailModel) {
             modifier = Modifier.background(getColor(MyColors.Background))
         ){
             Column(
-                modifier = Modifier.fillMaxSize().padding(21.dp, 34.dp, 21.dp, 0.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.fillMaxSize().padding(21.dp, 0.dp, 21.dp, 0.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceEvenly
             ) {
                 loadDrinkImgAsync(currentDrink)
                 Image(
@@ -61,25 +63,17 @@ private fun Content(model: CocktailModel) {
                         .align(Alignment.CenterHorizontally)
                         .size(150.dp)
                 )
-                Spacer(modifier = Modifier.height(50.dp))
-                // Ingredients
-                Text(
-                    "Ingredients ",
+
+                Text("Ingredients ",
                     style = MaterialTheme.typography.body2,
-                    modifier = Modifier.align(Alignment.Start)
-                )           // make it kursiv
-                Spacer(modifier = Modifier.height(21.dp))
+                    modifier = Modifier.align(Alignment.Start))
+
                 Ingredients_Box(model)
 
-                Spacer(modifier = Modifier.height(21.dp))
-
-                // Start Button
                 OutlinedButton(
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                     onClick = { currentScreen = Screen.TUTORIAL_SCREEN; fillRecipeSteps() },
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
                     border = BorderStroke(2.dp, getColor(MyColors.Borders))
                 ) {
@@ -97,11 +91,11 @@ fun Ingredients_Box(model: CocktailModel) {
     with(model) {
         LazyVerticalGrid(
             cells = GridCells.Adaptive(minSize = 100.dp),
-            modifier = Modifier.padding(5.dp, 0.dp, 5.dp, 0.dp).requiredHeight(230.dp).background(Color.Transparent)
+            modifier = Modifier.padding(5.dp, 0.dp, 5.dp, 0.dp).requiredHeight(268.dp).background(Color.Transparent)
         ) {
             items(currentDrink.ingredients.size) {
                 Box(
-                    modifier = Modifier.padding(0.dp).border(0.dp, Color.Transparent),
+                    modifier = Modifier.padding(0.dp, 10.dp).border(0.dp, Color.Transparent),
                 ) {
                     loadIngredientImgAsync(currentDrink.ingredients.get(it))
                     Column(
@@ -120,8 +114,7 @@ fun Ingredients_Box(model: CocktailModel) {
                             )
                         }
                         Text(currentDrink.meassurements.get(it) + " " + currentDrink.ingredients.get(it).name,
-                            modifier = Modifier.requiredWidth(70.dp))
-                        Spacer(modifier = Modifier.height(21.dp))
+                            modifier = Modifier.requiredWidth(70.dp), textAlign = TextAlign.Center)
                     }
                 }
             }
