@@ -49,6 +49,8 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
     var isRecording = mutableStateOf(false)
     var audio_text = mutableStateOf("")
 
+    var permissionWasRequested = false
+
 
     //**********************************************************************************************
     //get Data
@@ -183,8 +185,11 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
     //Speech
 
     fun recording(){
-        grantMicrophoneAccess()
-        grantAvailabilityOfSpeechRecognizer()
+        if(!permissionWasRequested){
+            grantMicrophoneAccess()
+            grantAvailabilityOfSpeechRecognizer()
+            permissionWasRequested = true
+        }
         startListening()
         isRecording.value = true
     }
