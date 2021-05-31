@@ -75,6 +75,8 @@ private fun Body(model : CocktailModel){
                         Text("If you want to move a step forward")
                     }
 
+                    Spacer(modifier = Modifier.padding(4.dp))
+
                     Column(horizontalAlignment = Alignment.CenterHorizontally){
                         Row(verticalAlignment = Alignment.Bottom){
                             Text("Say ")
@@ -82,6 +84,8 @@ private fun Body(model : CocktailModel){
                         }
                         Text("If you want to move a step backward")
                     }
+
+                    Spacer(modifier = Modifier.padding(4.dp))
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally){
                         Row(verticalAlignment = Alignment.Bottom){

@@ -78,13 +78,19 @@ private fun Content(model: CocktailModel) {
                             fontSize = 16.sp
                     )
                     IconButton(onClick = { checkAndSetFavourite(currentDrink) }) {
-                        Image(
-                                painter = painterResource(id = getSvg(MySvgs.StarUnfilled)),
-                                contentDescription = "No favourite",
-                                modifier = Modifier
-                                        .requiredSize(27.dp)
-                                        .align(CenterHorizontally)
-                        )
+                        if (currentDrink.isFavorite) {
+                            Image(
+                                    painterResource(id = getSvg(MySvgs.StarFilled)),
+                                    contentDescription = "Favourite",
+                                    modifier = Modifier.requiredSize(27.dp)
+                            )
+                        } else {
+                            Image(
+                                    painterResource(id = getSvg(MySvgs.StarUnfilled)),
+                                    contentDescription = "No Favourite",
+                                    modifier = Modifier.requiredSize(27.dp)
+                            )
+                        }
                     }
                 }
                 OutlinedButton(

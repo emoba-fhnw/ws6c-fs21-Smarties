@@ -294,4 +294,8 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
             drink.isFavorite = false
         }
     }
+
+    fun toggleTheme() {
+        darkTheme = !darkTheme
+    }
 }
