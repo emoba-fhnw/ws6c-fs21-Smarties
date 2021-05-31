@@ -41,7 +41,7 @@ fun Favourite_Screen(model: CocktailModel) {
                         }
                     })
                 },
-                drawerContent = { fhnw.ws6c.theapp.ui.Drawer(model) },
+                drawerContent = { Drawer(model) },
                 content = { Body(model) }
             )
         }
@@ -52,28 +52,28 @@ fun Favourite_Screen(model: CocktailModel) {
 fun TopBar(model: CocktailModel, title: String, icon: ImageVector, onClickAct: () -> Unit = {}) {
     with(model) {
         TopAppBar(
-                backgroundColor = MaterialTheme.colors.background,
-                modifier = Modifier
-                        .wrapContentWidth(Alignment.CenterHorizontally)
-                        .border(
-                                1.dp,
-                                Color.Transparent
-                        ),
-                title = {
-                    Text(
-                            title,
-                            style = MaterialTheme.typography.h1,
-                            color = MaterialTheme.colors.primary,
-                    )
-                },
-                navigationIcon = {
-                    IconButton(
-                            onClick = { onClickAct() },
-                            modifier = Modifier.padding(21.dp, 0.dp, 21.dp, 0.dp)
-                    ) {
-                        Icon(icon, "Menu")
-                    }
+            backgroundColor = MaterialTheme.colors.background,
+            modifier = Modifier
+                .wrapContentWidth(Alignment.CenterHorizontally)
+                .border(
+                    1.dp,
+                    Color.Transparent
+                ),
+            title = {
+                Text(
+                    title,
+                    style = MaterialTheme.typography.h1,
+                    color = MaterialTheme.colors.primary,
+                )
+            },
+            navigationIcon = {
+                IconButton(
+                    onClick = { onClickAct() },
+                    modifier = Modifier.padding(21.dp, 0.dp, 21.dp, 0.dp)
+                ) {
+                    Icon(icon, "Menu")
                 }
+            }
         )
     }
 }
@@ -81,22 +81,25 @@ fun TopBar(model: CocktailModel, title: String, icon: ImageVector, onClickAct: (
 @Composable
 fun Drawer(model: CocktailModel) {
     with(model) {
-        Column(modifier = Modifier
+        Column(
+            modifier = Modifier
                 .fillMaxWidth()
-                .padding(5.dp)) {
+                .padding(5.dp)
+        ) {
             TextButton(onClick = { currentScreen = Screen.CATEGORY_SCREEN }) {
                 Text("Cocktails")
             }
             TextButton(onClick = { currentScreen = Screen.FAVOURITE_SCREEN }) {
                 Text("My Bar")
             }
-            Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(1.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier
+                    .padding(4.dp),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text("Day")
-                Checkbox(checked = darkTheme, onCheckedChange = { toggleTheme() })
+                Switch(checked = darkTheme, onCheckedChange = { toggleTheme() })
                 Text("Night")
             }
         }
@@ -109,59 +112,61 @@ private fun Body(model: CocktailModel) {
     with(model) {
         if (currentFavouriteList.isEmpty()) {
             loadAllDrinkDetailsAsync()
-            Row(
-                    modifier = Modifier
-                            .fillMaxSize()
-                            .padding(21.dp, 0.dp, 21.dp, 0.dp),
-                    verticalAlignment = Alignment.CenterVertically,
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(21.dp, 0.dp, 21.dp, 0.dp),
+                contentAlignment = Alignment.Center
             ) {
-                Text(text = "No favorite drinks".toUpperCase(),
-                    textAlign = TextAlign.Center)
+                Text(
+                    text = "No favorite drinks".toUpperCase(),
+                    textAlign = TextAlign.Center
+                )
             }
         }
         Row(
-                modifier = Modifier.background(getColor(MyColors.Background))
+            modifier = Modifier.background(getColor(MyColors.Background))
         ) {
             LazyVerticalGrid(
-                    cells = GridCells.Adaptive(minSize = 100.dp),
-                    modifier = Modifier.padding(21.dp, 0.dp, 21.dp, 0.dp)
+                cells = GridCells.Adaptive(minSize = 100.dp),
+                modifier = Modifier.padding(21.dp, 0.dp, 21.dp, 0.dp)
             ) {
                 items(currentFavouriteList) {
                     Card(
-                            modifier = Modifier
-                                    .border(0.dp, Color.Transparent, RoundedCornerShape(10.dp))
-                                    .padding(4.5.dp)
-                                    .clickable(
-                                            onClick = {
-                                                currentScreen = Screen.RECIPE_OVERVIEW_SCREEN; currentDrink =
-                                                    it; loadAllDrinkDetailsAsync()
-                                            })
+                        modifier = Modifier
+                            .border(0.dp, Color.Transparent, RoundedCornerShape(10.dp))
+                            .padding(4.5.dp)
+                            .clickable(
+                                onClick = {
+                                    currentScreen = Screen.RECIPE_OVERVIEW_SCREEN; currentDrink =
+                                    it; loadAllDrinkDetailsAsync()
+                                })
                     ) {
                         loadDrinkImgAsync(it)
                         Box(Modifier.requiredSize(100.dp)) {
                             Image(
-                                    it.preview_img,
-                                    "Image of " + it.name,
-                                    modifier = Modifier.requiredSize(100.dp)
+                                it.preview_img,
+                                "Image of " + it.name,
+                                modifier = Modifier.requiredSize(100.dp)
                             )
                             Box(
-                                    Modifier
-                                            .padding(0.dp, 60.dp, 0.dp, 0.dp)
-                                            .background(Color(0xCCFFFFFF)) //Background of Text in card
+                                Modifier
+                                    .padding(0.dp, 60.dp, 0.dp, 0.dp)
+                                    .background(Color(0xCCFFFFFF)) //Background of Text in card
                             ) {
                                 Row(
-                                        Modifier.padding(4.dp, 4.dp),
-                                        verticalAlignment = Alignment.CenterVertically,
+                                    Modifier.padding(4.dp, 4.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
                                 ) {
                                     Box(
-                                            Modifier
-                                                    .padding(2.dp)
-                                                    .requiredWidth(64.dp)
+                                        Modifier
+                                            .padding(2.dp)
+                                            .requiredWidth(64.dp)
                                     ) {
                                         Text(
-                                                it.name,
-                                                style = MaterialTheme.typography.body1,
-                                                color = Color.Black
+                                            it.name,
+                                            style = MaterialTheme.typography.body1,
+                                            color = Color.Black
                                         )
                                     }
                                     Box(Modifier.padding(2.dp)) {
@@ -169,15 +174,15 @@ private fun Body(model: CocktailModel) {
                                         IconButton(onClick = { checkAndSetFavourite(it) }) {
                                             if (it.isFavorite) {
                                                 Image(
-                                                        painterResource(id = getSvg(MySvgs.StarFilled)),
-                                                        contentDescription = "Favourite",
-                                                        modifier = Modifier.requiredSize(27.dp)
+                                                    painterResource(id = getSvg(MySvgs.StarFilled)),
+                                                    contentDescription = "Favourite",
+                                                    modifier = Modifier.requiredSize(27.dp)
                                                 )
                                             } else {
                                                 Image(
-                                                        painterResource(id = getSvg(MySvgs.StarUnfilled)),
-                                                        contentDescription = "No Favourite",
-                                                        modifier = Modifier.requiredSize(27.dp)
+                                                    painterResource(id = getSvg(MySvgs.StarUnfilled)),
+                                                    contentDescription = "No Favourite",
+                                                    modifier = Modifier.requiredSize(27.dp)
                                                 )
                                             }
                                         }

@@ -104,18 +104,23 @@ fun Drawer(model: CocktailModel) {
                 Text("My Bar")
             }
 
-            Row(
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(1.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    .height(75.dp),
+                contentAlignment = Alignment.Center
             ) {
-                Text("Day")
-                Checkbox(checked = darkTheme, onCheckedChange = { toggleTheme() })
-                Text("Night")
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("Day")
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    Switch(checked = darkTheme, onCheckedChange = { toggleTheme() })
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    Text("Night")
+                }
             }
-
         }
     }
 }
