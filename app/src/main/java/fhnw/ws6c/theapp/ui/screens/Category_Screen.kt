@@ -74,7 +74,7 @@ private fun Body(model: CocktailModel) {
         ){
             LazyVerticalGrid(
                 cells = GridCells.Adaptive(minSize = 100.dp),
-                modifier = Modifier.padding(21.dp, 0.dp, 21.dp, 0.dp)
+                modifier = Modifier.padding(21.dp, 0.dp, 21.dp, 0.dp).background(Color.Transparent)
             ) {
                 items(currentCategory.listOfDrinks) {
                     Card(
@@ -92,7 +92,7 @@ private fun Body(model: CocktailModel) {
                             Image(
                                 it.preview_img,
                                 "Image of " + it.name,
-                                modifier = Modifier.requiredSize(100.dp)
+                                modifier = Modifier.fillMaxSize()
                             )
                             Box(
                                 Modifier

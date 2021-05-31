@@ -161,7 +161,7 @@ private fun Instruction_Box(model: CocktailModel, step: RecipeStep) {
         Box(
             modifier = Modifier
                 .border(1.dp, getColor(MyColors.Borders), RoundedCornerShape(10.dp))
-                .requiredWidth(318.dp)
+                .fillMaxWidth()
                 .requiredHeight(250.dp)
                 .background(Color.Transparent)
                 .verticalScroll(rememberScrollState())

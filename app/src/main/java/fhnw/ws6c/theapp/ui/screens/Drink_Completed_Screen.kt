@@ -2,6 +2,7 @@ package fhnw.ws6c.theapp.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -36,88 +37,94 @@ fun Drink_Completed_Screen(model: CocktailModel) {
 @Composable
 private fun Content(model: CocktailModel) {
     with(model) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(21.dp, 0.dp, 21.dp, 0.dp),
-            horizontalAlignment = CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly,
-        ) {
-            Image(
-                painterResource(id = R.drawable.ic_cocktail),
-                "Cocktail",
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Text(
-                "Enjoy your drink".toUpperCase(),
-                modifier = Modifier.align(CenterHorizontally),
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-            )
-
-            Column() {
-                Text(
-                    "You successfully finished mixing",
-                    modifier = Modifier.align(CenterHorizontally),
-                    fontSize = 16.sp
+        Row(
+            modifier = Modifier.background(getColor(MyColors.Background))
+        ){
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(21.dp, 0.dp, 21.dp, 0.dp),
+                horizontalAlignment = CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                Image(
+                    painterResource(id = R.drawable.ic_cocktail),
+                    "Cocktail",
+                    modifier = Modifier.fillMaxWidth()
                 )
-                Text(
-                    currentDrink.name.toUpperCase(),
-                    modifier = Modifier.align(CenterHorizontally),
-                    fontSize = 16.sp
-                )
-            }
 
-            Column(horizontalAlignment = CenterHorizontally,){
                 Text(
-                    "Did you like the drink?",
+                    "Enjoy your drink".toUpperCase(),
                     modifier = Modifier.align(CenterHorizontally),
-                    fontSize = 16.sp
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold,
                 )
-                IconButton(onClick = { /*TODO*/ }) {
-                    Image(
-                        painter = painterResource(id = getSvg(MySvgs.StarUnfilled)),
-                        contentDescription = "No favourite",
-                        modifier = Modifier
-                            .requiredSize(27.dp)
-                            .align(CenterHorizontally)
+
+                Column() {
+                    Text(
+                        "You successfully finished mixing",
+                        modifier = Modifier.align(CenterHorizontally),
+                        fontSize = 16.sp
+                    )
+                    Text(
+                        currentDrink.name.toUpperCase(),
+                        modifier = Modifier.align(CenterHorizontally),
+                        fontSize = 16.sp
                     )
                 }
-            }
-            OutlinedButton(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .align(CenterHorizontally)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                border = BorderStroke(2.dp, getColor(MyColors.Borders))
-            ) {
-                Text("Go to my bar", color = Color.White)
-            }
 
-            OutlinedButton(
-                onClick = { currentScreen = Screen.CATEGORY_SCREEN },
-                modifier = Modifier
-                    .align(CenterHorizontally)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                border = BorderStroke(2.dp, getColor(MyColors.Borders))
-            ) {
-                Text("Give me more cocktails", color = Color.White)
-            }
+                Column(horizontalAlignment = CenterHorizontally,){
+                    Text(
+                        "Did you like the drink?",
+                        modifier = Modifier.align(CenterHorizontally),
+                        fontSize = 16.sp
+                    )
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Image(
+                            painter = painterResource(id = getSvg(MySvgs.StarUnfilled)),
+                            contentDescription = "No favourite",
+                            modifier = Modifier
+                                .requiredSize(27.dp)
+                                .align(CenterHorizontally)
+                        )
+                    }
+                }
+                OutlinedButton(
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .align(CenterHorizontally)
+                        .fillMaxWidth(),
+                    shape = RoundedCornerShape(20.dp),
+                    border = BorderStroke(2.dp, getColor(MyColors.Borders))
+                ) {
+                    Text("Go to my bar", color = Color.White)
+                }
 
-            OutlinedButton(
-                onClick = { currentScreen = Screen.RECIPE_OVERVIEW_SCREEN },
-                modifier = Modifier
-                    .align(CenterHorizontally)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                border = BorderStroke(2.dp, getColor(MyColors.Borders))
-            ) {
-                Text("Mix it again", color = Color.White)
-            }
+                OutlinedButton(
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+                    onClick = { currentScreen = Screen.CATEGORY_SCREEN },
+                    modifier = Modifier
+                        .align(CenterHorizontally)
+                        .fillMaxWidth(),
+                    shape = RoundedCornerShape(20.dp),
+                    border = BorderStroke(2.dp, getColor(MyColors.Borders))
+                ) {
+                    Text("Give me more cocktails", color = Color.White)
+                }
 
+                OutlinedButton(
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+                    onClick = { currentScreen = Screen.RECIPE_OVERVIEW_SCREEN },
+                    modifier = Modifier
+                        .align(CenterHorizontally)
+                        .fillMaxWidth(),
+                    shape = RoundedCornerShape(20.dp),
+                    border = BorderStroke(2.dp, getColor(MyColors.Borders))
+                ) {
+                    Text("Mix it again", color = Color.White)
+                }
+            }
         }
     }
 }
