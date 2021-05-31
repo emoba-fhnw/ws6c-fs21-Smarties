@@ -86,21 +86,40 @@ fun Drawer(model: CocktailModel) {
                 .fillMaxWidth()
                 .padding(5.dp)
         ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(75.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "CocktailTschuuser",
+                    textAlign = TextAlign.Center
+                )
+            }
             TextButton(onClick = { currentScreen = Screen.CATEGORY_SCREEN }) {
                 Text("Cocktails")
             }
             TextButton(onClick = { currentScreen = Screen.FAVOURITE_SCREEN }) {
                 Text("My Bar")
             }
-            Row(
+
+            Box(
                 modifier = Modifier
-                    .padding(4.dp),
-//                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    .fillMaxWidth()
+                    .height(75.dp),
+                contentAlignment = Alignment.Center
             ) {
-                Text("Day")
-                Switch(checked = darkTheme, onCheckedChange = { toggleTheme() })
-                Text("Night")
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("Day")
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    Switch(checked = darkTheme, onCheckedChange = { toggleTheme() })
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    Text("Night")
+                }
             }
         }
     }
