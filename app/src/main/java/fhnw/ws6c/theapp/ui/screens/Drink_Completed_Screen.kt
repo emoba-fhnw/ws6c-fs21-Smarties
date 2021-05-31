@@ -86,7 +86,7 @@ private fun Content(model: CocktailModel) {
                 }
             }
             OutlinedButton(
-                onClick = { /*TODO*/ },
+                onClick = { currentScreen = Screen.FAVOURITE_SCREEN },
                 modifier = Modifier
                     .align(CenterHorizontally)
                     .fillMaxWidth(),

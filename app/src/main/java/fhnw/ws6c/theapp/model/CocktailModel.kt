@@ -49,6 +49,7 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
     var isRecording = mutableStateOf(false)
     var audio_text = mutableStateOf("")
 
+    var currentFavouriteList : MutableList<Drink> = mutableListOf()
 
     //**********************************************************************************************
     //get Data
@@ -265,6 +266,32 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
 
         if(!audio_text.value.toLowerCase().contains("stop") && (currentScreen == Screen.RECIPE_STEPS_SCREEN || currentScreen == Screen.TUTORIAL_SCREEN)){
             recording()
+        }
+    }
+
+    //*************************************************************************************************************
+    //Favourite
+    fun checkAndSetFavourite(drink: Drink) {
+        if (drink.isFavorite) {
+            removeFromFavourites(drink)
+        } else {
+            addToFavourites(drink)
+        }
+    }
+
+    //Add item to favourite list
+    fun addToFavourites(drink: Drink) {
+        if (drink.isFavorite == false) {
+            currentFavouriteList.add(drink)
+            drink.isFavorite = true
+        }
+    }
+
+    //Remove item from favourite list
+    fun removeFromFavourites(drink: Drink) {
+        if (drink.isFavorite == true) {
+            currentFavouriteList.remove(drink)
+            drink.isFavorite = false
         }
     }
 }
