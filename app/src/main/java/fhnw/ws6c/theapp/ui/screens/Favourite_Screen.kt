@@ -75,6 +75,7 @@ fun TopBar(model: CocktailModel, title : String, icon : ImageVector, onClickAct 
 private fun Body(model: CocktailModel) {
     with(model) {
         if(currentFavouriteList.isEmpty()){
+
             Text("No favorite drinks")
         }
 
