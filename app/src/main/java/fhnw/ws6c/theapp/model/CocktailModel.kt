@@ -247,11 +247,12 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
 
     fun onTextResult(){
         //************** back ************
-        if(currentScreen != Screen.TUTORIAL_SCREEN){
-            if( audio_text.value.toLowerCase().contains("back") ||
-                audio_text.value.toLowerCase().contains("beck", true ) ||
-                audio_text.value.toLowerCase().contains("bag" , true ) ||
-                audio_text.value.toLowerCase().contains("beg" , true )){
+
+        if( audio_text.value.toLowerCase().contains("back") ||
+            audio_text.value.toLowerCase().contains("beck") ||
+            audio_text.value.toLowerCase().contains("bag") ||
+            audio_text.value.toLowerCase().contains("beg")){
+            if(currentScreen != Screen.TUTORIAL_SCREEN) {
                 if (currentRecipeStepIndex > 0) {
                     currentRecipeStepIndex--
                 }
@@ -259,7 +260,7 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
         }
 
         //************** next ************
-        else if(audio_text.value.toLowerCase().contains("next", true)){
+        else if(audio_text.value.toLowerCase().contains("next")){
             enableSpeechRec = true
 
             if(currentScreen == Screen.TUTORIAL_SCREEN){
