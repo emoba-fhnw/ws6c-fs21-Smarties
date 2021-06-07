@@ -46,6 +46,8 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
     var recipeSteps = mutableListOf<RecipeStep>()
     var currentRecipeStepIndex by mutableStateOf(0)
 
+    var currentFavouriteList : MutableList<Drink> = mutableListOf()
+
     //speech:
     var audio_text = mutableStateOf("")
     var speechRec : SpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
@@ -54,7 +56,6 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
     var permissionWasRequested = false
     var enableSpeechRec = false
     var isRecording = mutableStateOf(false)
-
 
     //**********************************************************************************************
     //get Data
@@ -183,6 +184,40 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
             mySvgs.light_svg
         }
     }
+
+
+    //*************************************************************************************************************
+    //Favourite
+
+    fun checkAndSetFavourite(drink: Drink) {
+        if (drink.isFavorite) {
+            removeFromFavourites(drink)
+        } else {
+            addToFavourites(drink)
+        }
+    }
+
+    //Add item to favourite list
+    fun addToFavourites(drink: Drink) {
+        if (drink.isFavorite == false) {
+            currentFavouriteList.add(drink)
+            drink.isFavorite = true
+        }
+    }
+
+    //Remove item from favourite list
+    fun removeFromFavourites(drink: Drink) {
+        if (drink.isFavorite == true) {
+            currentFavouriteList.remove(drink)
+            drink.isFavorite = false
+        }
+    }
+
+    fun toggleTheme() {
+        darkTheme = !darkTheme
+    }
+
+
 
     //*************************************************************************************************************
     //Speech

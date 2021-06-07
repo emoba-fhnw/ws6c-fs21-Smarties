@@ -1,9 +1,10 @@
-package fhnw.ws6c.theapp.ui
+package fhnw.ws6c.theapp.ui.screens
 
-import android.widget.ToggleButton
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -13,13 +14,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import fhnw.ws6c.theapp.model.Screen
 import fhnw.ws6c.theapp.model.CocktailModel
+import fhnw.ws6c.theapp.model.Screen
 import fhnw.ws6c.theapp.ui.theme.AppTheme
 import fhnw.ws6c.theapp.ui.theme.MyColors
 import fhnw.ws6c.theapp.ui.theme.MySvgs
@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 
 @ExperimentalFoundationApi
 @Composable
-fun Category_Screen(model: CocktailModel) {
+fun Favourite_Screen(model: CocktailModel) {
     with(model) {
         val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
         val scope = rememberCoroutineScope()
@@ -129,20 +129,28 @@ fun Drawer(model: CocktailModel) {
 @Composable
 private fun Body(model: CocktailModel) {
     with(model) {
-        if (currentCategory.listOfDrinks.isEmpty()) {
-            loadDrinksOfChoosenCategoryAsync()
+        if (currentFavouriteList.isEmpty()) {
+            loadAllDrinkDetailsAsync()
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(21.dp, 0.dp, 21.dp, 0.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "No favorite drinks".toUpperCase(),
+                    textAlign = TextAlign.Center
+                )
+            }
         }
-
         Row(
             modifier = Modifier.background(getColor(MyColors.Background))
         ) {
             LazyVerticalGrid(
                 cells = GridCells.Adaptive(minSize = 100.dp),
-                modifier = Modifier
-                    .padding(21.dp, 0.dp, 21.dp, 0.dp)
-                    .background(Color.Transparent)
+                modifier = Modifier.padding(21.dp, 0.dp, 21.dp, 0.dp)
             ) {
-                items(currentCategory.listOfDrinks) {
+                items(currentFavouriteList) {
                     Card(
                         modifier = Modifier
                             .border(0.dp, Color.Transparent, RoundedCornerShape(10.dp))
@@ -158,7 +166,7 @@ private fun Body(model: CocktailModel) {
                             Image(
                                 it.preview_img,
                                 "Image of " + it.name,
-                                modifier = Modifier.fillMaxSize()
+                                modifier = Modifier.requiredSize(100.dp)
                             )
                             Box(
                                 Modifier
@@ -177,7 +185,7 @@ private fun Body(model: CocktailModel) {
                                         Text(
                                             it.name,
                                             style = MaterialTheme.typography.body1,
-                                            color = Black
+                                            color = Color.Black
                                         )
                                     }
                                     Box(Modifier.padding(2.dp)) {

@@ -6,10 +6,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import fhnw.ws6c.theapp.model.Screen
 import fhnw.ws6c.theapp.model.CocktailModel
-import fhnw.ws6c.theapp.ui.screens.Drink_Completed_Screen
-import fhnw.ws6c.theapp.ui.screens.Recipe_Screen
-import fhnw.ws6c.theapp.ui.screens.Recipe_Steps_Screen
-import fhnw.ws6c.theapp.ui.screens.Tutorial_Screen
+import fhnw.ws6c.theapp.ui.screens.*
 
 @ExperimentalFoundationApi
 @Composable
@@ -22,6 +19,7 @@ fun AppUI(model: CocktailModel) {
                 Screen.TUTORIAL_SCREEN  -> { Tutorial_Screen(model)}
                 Screen.RECIPE_STEPS_SCREEN  -> { Recipe_Steps_Screen(model)}
                 Screen.DRINK_COMPLETED_SCREEN -> { Drink_Completed_Screen(model)}
+                Screen.FAVOURITE_SCREEN -> { Favourite_Screen(model) }
             }
         }
     }
