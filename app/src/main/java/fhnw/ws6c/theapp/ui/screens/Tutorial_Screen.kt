@@ -56,7 +56,10 @@ private fun Body(model : CocktailModel){
                 .draggable(state = state,
                     orientation = Orientation.Horizontal,
                     onDragStopped = {
-                        if (offsetX < -200) currentScreen = Screen.RECIPE_STEPS_SCREEN; offsetX = 0f
+                        if (offsetX < -200) {
+                            stopRecording() //stop recording, when user decides to use swiping
+                            currentScreen = Screen.RECIPE_STEPS_SCREEN;
+                            offsetX = 0f}
                     }),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceEvenly) {

@@ -46,10 +46,14 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
     var recipeSteps = mutableListOf<RecipeStep>()
     var currentRecipeStepIndex by mutableStateOf(0)
 
-    var isRecording = mutableStateOf(false)
+    //speech:
     var audio_text = mutableStateOf("")
+    var speechRec : SpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
+    val recIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
 
     var permissionWasRequested = false
+    var enableSpeechRec = false
+    var isRecording = mutableStateOf(false)
 
 
     //**********************************************************************************************
@@ -97,7 +101,6 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
     //Create Recipe-Steps
 
     fun fillRecipeSteps(){
-        println("LoadingRecipeSteps")
         recipeSteps = emptyList<RecipeStep>().toMutableList()
 
         val sentenceList = currentDrink.instructions.substring(0,currentDrink.instructions.length-1).split(".").toMutableList() //convert string to list
@@ -185,33 +188,90 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
     //Speech
 
     fun recording(){
-        if(!permissionWasRequested){
-            grantMicrophoneAccess()
-            grantAvailabilityOfSpeechRecognizer()
-            permissionWasRequested = true
-        }
-        startListening()
+
         isRecording.value = true
+
+        if(enableSpeechRec || currentScreen === Screen.TUTORIAL_SCREEN){    //only start listening, if speech recognition was enabled or screen == TUTORIAL_SCREEN
+            if(!permissionWasRequested){                                    //only ask once for permission
+                permissionWasRequested = true
+                grantMicrophoneAccess()
+                grantAvailabilityOfSpeechRecognizer()
+            }
+            startListening()
+        }else{                                                              //SpeechRecoginition was not activated
+            stopRecording()
+        }
     }
 
-    fun grantMicrophoneAccess() {
+    fun stopRecording(){
+        isRecording.value = false
+        enableSpeechRec = false
+        speechRec.stopListening()
+    }
+
+
+    fun onTextResult(){
+        //************** back ************
+        if(currentScreen != Screen.TUTORIAL_SCREEN){
+            if( audio_text.value.toLowerCase().contains("back") ||
+                audio_text.value.toLowerCase().contains("beck", true ) ||
+                audio_text.value.toLowerCase().contains("bag" , true ) ||
+                audio_text.value.toLowerCase().contains("beg" , true )){
+                if (currentRecipeStepIndex > 0) {
+                    currentRecipeStepIndex--
+                }
+            }
+        }
+
+        //************** next ************
+        else if(audio_text.value.toLowerCase().contains("next", true)){
+            enableSpeechRec = true
+
+            if(currentScreen == Screen.TUTORIAL_SCREEN){
+                currentScreen = Screen.RECIPE_STEPS_SCREEN
+                recording()
+            }
+            else if(currentScreen == Screen.RECIPE_STEPS_SCREEN){
+                if (currentRecipeStepIndex < recipeSteps.size - 1) {
+                    currentRecipeStepIndex++
+                } else {
+                    currentScreen = Screen.DRINK_COMPLETED_SCREEN
+                    currentRecipeStepIndex = 0
+                    stopRecording()                                         //stopRecording when on last drink_completed_screen
+                }
+            }
+        }
+
+        //************** stop ************
+        if(audio_text.value.toLowerCase().contains("stop", true) && currentScreen != Screen.TUTORIAL_SCREEN){
+            stopRecording()
+        }else{
+            recording()
+        }
+    }
+
+
+
+    //*************+****************
+    // private functions
+
+    private fun startListening(){
+        speechRec.startListening(recIntent)
+    }
+
+    private fun grantMicrophoneAccess() {
 
         var isGranted = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
 
-        var text = "Wenn du die Sprachsteuerung verwenden möchtest brauchen wir die Berechtigung dein Microphon verwenden zu dürfen"
+        var text = "If you want to use the voice control we need the permission to use your microphone."
 
-        if(!isGranted){
+        if(!isGranted){                                                     //Mic access was not granted
             Toast.makeText(context,text, Toast.LENGTH_SHORT).show()
-
-            ActivityCompat.requestPermissions(
-                context,
-                arrayOf(Manifest.permission.RECORD_AUDIO),
-                0
-            )
+            ActivityCompat.requestPermissions(context, arrayOf(Manifest.permission.RECORD_AUDIO), 0)
         }
     }
 
-    fun grantAvailabilityOfSpeechRecognizer(){
+    private fun grantAvailabilityOfSpeechRecognizer(){
         if (!SpeechRecognizer.isRecognitionAvailable(context)) {
             val appPackageName = "com.google.android.googlequicksearchbox"
             try {
@@ -230,46 +290,11 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
                 )
             }
         }
-        println(SpeechRecognizer.isRecognitionAvailable(context))
+        speechRec.setRecognitionListener(RecListener(this))
+        //Set language
+        recIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        recIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en_US")
+        recIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something!")
     }
 
-    fun startListening(){
-        var sp : SpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
-
-        sp.setRecognitionListener(RecListener(this))
-
-        val i = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-        i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something!")
-
-        sp.startListening(i)
-    }
-
-    fun onTextResult(){
-        if(audio_text.value.toLowerCase().contains("back")){
-            if (currentRecipeStepIndex > 0) {
-                currentRecipeStepIndex--
-            }
-        }
-        else if(audio_text.value.toLowerCase().contains("next")){
-
-            if(currentScreen == Screen.TUTORIAL_SCREEN){
-                currentScreen = Screen.RECIPE_STEPS_SCREEN
-            }
-            else if(currentScreen == Screen.RECIPE_STEPS_SCREEN){
-                if (currentRecipeStepIndex < recipeSteps.size - 1) {
-                    currentRecipeStepIndex++
-                } else {
-                    currentScreen = Screen.DRINK_COMPLETED_SCREEN
-                    currentRecipeStepIndex = 0
-                }
-            }
-
-        }
-
-        if(!audio_text.value.toLowerCase().contains("stop") && (currentScreen == Screen.RECIPE_STEPS_SCREEN || currentScreen == Screen.TUTORIAL_SCREEN)){
-            recording()
-        }
-    }
 }

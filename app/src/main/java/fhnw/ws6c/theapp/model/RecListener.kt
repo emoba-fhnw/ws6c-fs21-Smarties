@@ -29,16 +29,19 @@ class RecListener(var model : CocktailModel) : RecognitionListener{
 
     override fun onError(error: Int) {
         model.isRecording.value = false
-        println("onError: " + error)
-        if(error==7){
-            Toast.makeText(model.context,"Kannst du das bitte wiederholen?", Toast.LENGTH_LONG).show()
+        if(error==7){ //ERROR_NO_MATCH
+            if(model.enableSpeechRec){
+                Toast.makeText(model.context,"Can you repeat that please?", Toast.LENGTH_SHORT).show()
+            }
+            model.recording()
+        }
+        if(error==8){ //ERROR_RECOGNIZER_BUSY
             model.recording()
         }
     }
 
     override fun onResults(results: Bundle?) {
         model.isRecording.value = false
-        println("onResults")
         model.audio_text.value = results!!.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)!!.get(0)
         model.onTextResult()
     }

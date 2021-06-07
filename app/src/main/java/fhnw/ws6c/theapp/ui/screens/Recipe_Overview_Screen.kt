@@ -47,6 +47,7 @@ fun Recipe_Screen(model: CocktailModel) {
 @Composable
 private fun Content(model: CocktailModel) {
     with(model) {
+        stopRecording()
         Row(
             modifier = Modifier.background(getColor(MyColors.Background))
         ){

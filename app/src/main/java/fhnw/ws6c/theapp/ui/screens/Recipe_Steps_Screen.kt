@@ -215,14 +215,14 @@ fun stepCircles(model : CocktailModel){
             items(recipeSteps.size){
                 if(currentRecipeStepIndex === it){
                     Image(
-                        painterResource(id = getSvg(fhnw.ws6c.theapp.ui.theme.MySvgs.FilledStepCircle)),
-                        contentDescription = "Microphone Off",
+                        painterResource(id = getSvg(MySvgs.FilledStepCircle)),
+                        contentDescription = "Current step",
                         modifier = Modifier.padding(2.dp, 0.dp, 2.dp, 0.dp)
                     )
                 }else{
                     Image(
-                        painterResource(id = fhnw.ws6c.R.drawable.ic_step_circle_transparent),
-                        contentDescription = "Microphone Off",
+                        painterResource(id = R.drawable.ic_step_circle_transparent),
+                        contentDescription = "not current step",
                         modifier = Modifier.padding(2.dp, 0.dp, 2.dp, 0.dp)
                     )
                 }
@@ -234,18 +234,17 @@ fun stepCircles(model : CocktailModel){
 @Composable
 fun microphone(model : CocktailModel){
     with(model){
-        IconButton(onClick = { recording() }) {
-            if (isRecording.value) {
+        IconButton(onClick = { if(isRecording.value){ stopRecording() }else{ enableSpeechRec = true; recording() }}) {
+            if (!isRecording.value) {
                 Image(
-                    painterResource(id = getSvg(fhnw.ws6c.theapp.ui.theme.MySvgs.MicOff)),
-                    contentDescription = "Microphone Off"
+                    painterResource(id = getSvg(MySvgs.MicOff)),
+                    contentDescription = "Microphone off"
                 )
             } else {
                 Image(
-                    painterResource(id = getSvg(fhnw.ws6c.theapp.ui.theme.MySvgs.MicOn)),
-                    contentDescription = "Microphone Off"
+                    painterResource(id = getSvg(MySvgs.MicOn)),
+                    contentDescription = "Microphone on"
                 )
-
             }
         }
     }
