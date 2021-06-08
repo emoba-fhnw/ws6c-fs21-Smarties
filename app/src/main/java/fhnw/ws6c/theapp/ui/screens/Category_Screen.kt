@@ -1,6 +1,5 @@
 package fhnw.ws6c.theapp.ui
 
-import android.widget.ToggleButton
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
@@ -35,11 +34,11 @@ fun Category_Screen(model: CocktailModel) {
             Scaffold(
                 scaffoldState = scaffoldState,
                 topBar = {
-                    TopBar(model, "Cocktails", Icons.Rounded.Menu, {
+                    TopBar(model, "Cocktails", Icons.Rounded.Menu) {
                         scope.launch {
                             scaffoldState.drawerState.open()
                         }
-                    })
+                    }
                 },
                 drawerContent = { Drawer(model) },
                 content = { Body(model) }
@@ -116,11 +115,11 @@ private fun Body(model: CocktailModel) {
                             )
                             Box(
                                 Modifier
-                                    .padding(0.dp, 60.dp, 0.dp, 0.dp)
+                                    .padding(0.dp, 56.dp, 0.dp, 0.dp)
                                     .background(Color(0xCCFFFFFF)) //Background of Text in card
                             ) {
                                 Row(
-                                    Modifier.padding(4.dp, 4.dp),
+                                    Modifier.padding(2.dp, 2.dp),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
                                     Box(
