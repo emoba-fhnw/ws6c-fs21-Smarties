@@ -23,8 +23,6 @@ class Drink {
     val ingredients: MutableList<Ingredient> = mutableListOf()
     val meassurements: MutableList<String> = mutableListOf()
 
-    var isFavorite by mutableStateOf(false)
-
     constructor(json: JSONObject) {
         name = if (json.has("strDrink")) {
             json.getString("strDrink")
@@ -82,13 +80,4 @@ class Drink {
     }
 
     constructor() : this(JSONObject())
-
-//    //Damit Favouriten gesetzt bleiben
-//    override fun equals(other: Any?): Boolean {
-//        if (other is Drink) {
-//            return id == other.id
-//        } else {
-//            return false
-//        }
-//    }
 }

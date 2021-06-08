@@ -137,7 +137,7 @@ private fun Body(model: CocktailModel) {
                                     Box(Modifier.padding(2.dp)) {
                                         //Favourite
                                         IconButton(onClick = { checkAndSetFavourite(it) }) {
-                                            if (it.isFavorite) {
+                                            if (currentFavouriteMap.containsKey(it.id)) {
                                                 Image(
                                                     painterResource(id = getSvg(MySvgs.StarFilled)),
                                                     contentDescription = "Favourite",

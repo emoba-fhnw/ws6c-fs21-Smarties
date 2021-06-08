@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat
 import fhnw.ws6c.theapp.RecListener
 import java.util.*
 import androidx.activity.ComponentActivity
+import androidx.compose.runtime.mutableStateMapOf
 import fhnw.ws6c.theapp.ui.theme.MySvgs
 
 class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteImageService : RemoteImageService, val context : ComponentActivity) {
@@ -46,7 +47,7 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
     var recipeSteps = mutableListOf<RecipeStep>()
     var currentRecipeStepIndex by mutableStateOf(0)
 
-    var currentFavouriteList : MutableList<Drink> = mutableListOf()
+    var currentFavouriteMap : MutableMap<Int, Drink> = mutableStateMapOf()
 
     //speech:
     var audio_text = mutableStateOf("")
@@ -86,6 +87,7 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
             ingredient.img_big = remoteImageService.requestImageBitmap("https://www.thecocktaildb.com/images/ingredients/" + ingredient_url_name + ".png")
         }
         isLoading = false
+        println("ingredients were loaded")
     }
 
     fun loadAllDrinkDetailsAsync(){
@@ -190,27 +192,24 @@ class CocktailModel(val remoteRequestService: RemoteRequestService, val remoteIm
     //Favourite
 
     fun checkAndSetFavourite(drink: Drink) {
-        if (drink.isFavorite) {
+        if (currentFavouriteMap.containsKey(drink.id)) {
             removeFromFavourites(drink)
         } else {
             addToFavourites(drink)
         }
+        println("MAP: " + currentFavouriteMap.keys + currentFavouriteMap.values)
     }
 
     //Add item to favourite list
     fun addToFavourites(drink: Drink) {
-        if (drink.isFavorite == false) {
-            currentFavouriteList.add(drink)
-            drink.isFavorite = true
+        if (!currentFavouriteMap.containsKey(drink.id)) {
+            currentFavouriteMap.put(drink.id,drink)
         }
     }
 
     //Remove item from favourite list
     fun removeFromFavourites(drink: Drink) {
-        if (drink.isFavorite == true) {
-            currentFavouriteList.remove(drink)
-            drink.isFavorite = false
-        }
+        currentFavouriteMap.remove(drink.id)
     }
 
     fun toggleTheme() {

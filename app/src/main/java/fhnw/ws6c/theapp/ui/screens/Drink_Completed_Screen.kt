@@ -77,8 +77,9 @@ private fun Content(model: CocktailModel) {
                             modifier = Modifier.align(CenterHorizontally),
                             fontSize = 16.sp
                     )
+                    //Favourite
                     IconButton(onClick = { checkAndSetFavourite(currentDrink) }) {
-                        if (currentDrink.isFavorite) {
+                        if (currentFavouriteMap.containsKey(currentDrink.id)) {
                             Image(
                                     painterResource(id = getSvg(MySvgs.StarFilled_dr_compl)),
                                     contentDescription = "Favourite",

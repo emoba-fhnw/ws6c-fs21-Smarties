@@ -56,7 +56,7 @@ fun Favourite_Screen(model: CocktailModel) {
 private fun Body(model: CocktailModel) {
     with(model) {
         Row(modifier = Modifier.background(getColor(MyColors.Background)).fillMaxSize()){
-            if (currentFavouriteList.isEmpty()) {
+            if (currentFavouriteMap.isEmpty()) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -75,15 +75,14 @@ private fun Body(model: CocktailModel) {
                     .padding(21.dp, 0.dp, 21.dp, 0.dp)
                     .background(Color.Transparent)
             ) {
-                items(currentFavouriteList) {
+                items(currentFavouriteMap.values.toMutableList()) {
                     Card(
                         modifier = Modifier
                             .border(0.dp, Color.Transparent, RoundedCornerShape(10.dp))
                             .padding(4.5.dp)
                             .clickable(
                                 onClick = {
-                                    currentScreen = Screen.RECIPE_OVERVIEW_SCREEN; currentDrink =
-                                    it; loadAllDrinkDetailsAsync()
+                                    currentScreen = Screen.RECIPE_OVERVIEW_SCREEN; currentDrink = it; loadAllDrinkDetailsAsync()
                                 })
                     ) {
                         loadDrinkImgAsync(it)
@@ -116,7 +115,8 @@ private fun Body(model: CocktailModel) {
                                     Box(Modifier.padding(2.dp)) {
                                         //Favourite
                                         IconButton(onClick = { checkAndSetFavourite(it) }) {
-                                            if (it.isFavorite) {
+                                            println("Current Map: " + currentFavouriteMap)
+                                            if (currentFavouriteMap.containsKey(it.id)) {
                                                 Image(
                                                     painterResource(id = getSvg(MySvgs.StarFilled)),
                                                     contentDescription = "Favourite",
