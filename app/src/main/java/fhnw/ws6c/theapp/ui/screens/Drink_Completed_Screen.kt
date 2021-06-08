@@ -80,13 +80,13 @@ private fun Content(model: CocktailModel) {
                     IconButton(onClick = { checkAndSetFavourite(currentDrink) }) {
                         if (currentDrink.isFavorite) {
                             Image(
-                                    painterResource(id = getSvg(MySvgs.StarFilled)),
+                                    painterResource(id = getSvg(MySvgs.StarFilled_dr_compl)),
                                     contentDescription = "Favourite",
                                     modifier = Modifier.requiredSize(27.dp)
                             )
                         } else {
                             Image(
-                                    painterResource(id = getSvg(MySvgs.StarUnfilled)),
+                                    painterResource(id = getSvg(MySvgs.StarUnfilled_dr_compl)),
                                     contentDescription = "No Favourite",
                                     modifier = Modifier.requiredSize(27.dp)
                             )

@@ -20,6 +20,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import fhnw.ws6c.theapp.model.CocktailModel
 import fhnw.ws6c.theapp.model.Screen
+import fhnw.ws6c.theapp.ui.Drawer
+import fhnw.ws6c.theapp.ui.TopBar
 import fhnw.ws6c.theapp.ui.theme.AppTheme
 import fhnw.ws6c.theapp.ui.theme.MyColors
 import fhnw.ws6c.theapp.ui.theme.MySvgs
@@ -35,11 +37,11 @@ fun Favourite_Screen(model: CocktailModel) {
             Scaffold(
                 scaffoldState = scaffoldState,
                 topBar = {
-                    TopBar(model, "Cocktails", Icons.Rounded.Menu, {
+                    TopBar(model, "My Bar", Icons.Rounded.Menu) {
                         scope.launch {
                             scaffoldState.drawerState.open()
                         }
-                    })
+                    }
                 },
                 drawerContent = { Drawer(model) },
                 content = { Body(model) }
@@ -48,107 +50,30 @@ fun Favourite_Screen(model: CocktailModel) {
     }
 }
 
-@Composable
-fun TopBar(model: CocktailModel, title: String, icon: ImageVector, onClickAct: () -> Unit = {}) {
-    with(model) {
-        TopAppBar(
-            backgroundColor = MaterialTheme.colors.background,
-            modifier = Modifier
-                .wrapContentWidth(Alignment.CenterHorizontally)
-                .border(
-                    1.dp,
-                    Color.Transparent
-                ),
-            title = {
-                Text(
-                    title,
-                    style = MaterialTheme.typography.h1,
-                    color = MaterialTheme.colors.primary,
-                )
-            },
-            navigationIcon = {
-                IconButton(
-                    onClick = { onClickAct() },
-                    modifier = Modifier.padding(21.dp, 0.dp, 21.dp, 0.dp)
-                ) {
-                    Icon(icon, "Menu")
-                }
-            }
-        )
-    }
-}
-
-@Composable
-fun Drawer(model: CocktailModel) {
-    with(model) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(5.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(75.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "CocktailTschuuser",
-                    textAlign = TextAlign.Center
-                )
-            }
-            TextButton(onClick = { currentScreen = Screen.CATEGORY_SCREEN }) {
-                Text("Cocktails")
-            }
-            TextButton(onClick = { currentScreen = Screen.FAVOURITE_SCREEN }) {
-                Text("My Bar")
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(75.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text("Day")
-                    Spacer(modifier = Modifier.padding(4.dp))
-                    Switch(checked = darkTheme, onCheckedChange = { toggleTheme() })
-                    Spacer(modifier = Modifier.padding(4.dp))
-                    Text("Night")
-                }
-            }
-        }
-    }
-}
 
 @ExperimentalFoundationApi
 @Composable
 private fun Body(model: CocktailModel) {
     with(model) {
-        if (currentFavouriteList.isEmpty()) {
-            loadAllDrinkDetailsAsync()
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(21.dp, 0.dp, 21.dp, 0.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "No favorite drinks".toUpperCase(),
-                    textAlign = TextAlign.Center
-                )
+        Row(modifier = Modifier.background(getColor(MyColors.Background)).fillMaxSize()){
+            if (currentFavouriteList.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(21.dp, 0.dp, 21.dp, 0.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "No favorite drinks".toUpperCase(),
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
-        }
-        Row(
-            modifier = Modifier.background(getColor(MyColors.Background))
-        ) {
             LazyVerticalGrid(
                 cells = GridCells.Adaptive(minSize = 100.dp),
-                modifier = Modifier.padding(21.dp, 0.dp, 21.dp, 0.dp)
+                modifier = Modifier
+                    .padding(21.dp, 0.dp, 21.dp, 0.dp)
+                    .background(Color.Transparent)
             ) {
                 items(currentFavouriteList) {
                     Card(
