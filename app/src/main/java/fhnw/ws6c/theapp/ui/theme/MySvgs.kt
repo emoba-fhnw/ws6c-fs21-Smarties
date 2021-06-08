@@ -11,5 +11,6 @@ enum class MySvgs(val light_svg : Int, val dark_svg : Int){
     StarFilled(     R.drawable.ic_star_filled_lm,   R.drawable.ic_star_filled_dm),
     StarUnfilled(   R.drawable.ic_star_unfilled_lm, R.drawable.ic_star_unfilled_dm),
     Swipe(          R.drawable.ic_swipe_lm,         R.drawable.ic_swipe_dm),
-    FilledStepCircle(     R.drawable.ic_step_circle_filled_lm, R.drawable.ic_step_circle_filled_dm)
+    FilledStepCircle(     R.drawable.ic_step_circle_filled_lm, R.drawable.ic_step_circle_filled_dm),
+    Logo(           R.drawable.ic_logo_lm,          R.drawable.ic_logo_dm)
 }

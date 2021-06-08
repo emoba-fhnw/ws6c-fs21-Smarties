@@ -78,52 +78,6 @@ fun TopBar(model: CocktailModel, title: String, icon: ImageVector, onClickAct: (
     }
 }
 
-@Composable
-fun Drawer(model: CocktailModel) {
-    with(model) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(5.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(75.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "CocktailTschuuser",
-                    textAlign = TextAlign.Center
-                )
-            }
-            TextButton(onClick = { currentScreen = Screen.CATEGORY_SCREEN }) {
-                Text("Cocktails")
-            }
-            TextButton(onClick = { currentScreen = Screen.FAVOURITE_SCREEN }) {
-                Text("My Bar")
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(75.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text("Day")
-                    Spacer(modifier = Modifier.padding(4.dp))
-                    Switch(checked = darkTheme, onCheckedChange = { toggleTheme() })
-                    Spacer(modifier = Modifier.padding(4.dp))
-                    Text("Night")
-                }
-            }
-        }
-    }
-}
 
 @ExperimentalFoundationApi
 @Composable
@@ -203,6 +157,41 @@ private fun Body(model: CocktailModel) {
                             Spacer(modifier = Modifier.padding(17.dp))
                         }
                     }
+                }
+            }
+        }
+    }
+}
+
+
+
+@Composable
+fun Drawer(model: CocktailModel) {
+    with(model) {
+        Row(
+            modifier = Modifier.background(getColor(MyColors.Background)).fillMaxSize(),
+        ){
+            Column(modifier = Modifier.fillMaxSize().padding(5.dp), verticalArrangement = Arrangement.SpaceEvenly) {
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center){
+                    Image(
+                        painterResource(id = getSvg(MySvgs.Logo)),
+                        contentDescription = "Logo"
+                    )
+                }
+                TextButton(onClick = { currentScreen = Screen.CATEGORY_SCREEN }) {
+                    Text("Cocktails")
+                }
+                Divider()
+                TextButton(onClick = { currentScreen = Screen.FAVOURITE_SCREEN }) {
+                    Text("My Bar")
+                }
+                Divider()
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+                    Text("Day")
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    Switch(checked = darkTheme, onCheckedChange = { toggleTheme() })
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    Text("Night")
                 }
             }
         }
