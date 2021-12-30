@@ -1,8 +1,15 @@
 == ws6C - Mobile Experience Projekt
 
+= CocktailTschuser
+Eine App mit leckeren Cocktailrezepten.
+
 === Bearbeitet von
 
 * Jenny Puijan Tran
 * Louisa Reinger
 
-
+=== Verwendete Technologien
+* Kotlin
+* Jetpack Compose
+* API: TheCocktailDB (https://www.thecocktaildb.com)
+* Google Spracherkennung (Google muss auf dem Smartphone installiert sein, um die Sprachsteuerung verwenden zu können)
